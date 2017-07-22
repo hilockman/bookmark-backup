@@ -1,0 +1,228 @@
+1 MySql解除只能本地访问配置，解决方案：
+	１．以root用户登陆mysql数据库
+	mysql -u root -p
+
+	２．执行一下命令分配新用户
+	grant all privileges on *.* to root@'%' identified by 'your root password'; 
+
+	
+	添加成功之后返回信息：Query OK, 0 rows affected (0.03 sec)
+
+	'all privileges ':所有权限 也可以写成 select ,update等。
+	*.* 所有库的所有表 如 databasename.*。
+	IP  数据库所在的IP。
+	identified by ‘密码’ 表示通过密码连接
+
+	３．执行完上述命令后用下面的命令刷新一下权限
+	flush privileges;
+
+	*实际操作：
+	mysql -u root -p
+	grant all privileges on *.* to root@'%' identified by 'root';
+
+2，项目启动时提示编译选项错误，而且系统启动后，无法访问网页
+   确保Preferences->Java->Compiler中"Store information about method parameters" 选项勾选上
+   
+3 表单验证依赖的jar   
+表单校验：
+validation-api-1.1.0.Final.jar
+hibernate-validator-5.1.3.Final.jar
+jboss-logging-3.2.1.Final.jar （运行时依赖）
+classmate-1.1.0.jar （运行时依赖）
+
+4 jsp中文乱码：
+	1, 修改eclipse中的三个配置：
+	   Preferences->Web->JSP Files->jsp->Encoding->ISO 10646/Unicode(UTF-8)
+	   Preferences->Genaral->Content Types->JSP->*.jsp->UTF-8（*注意UTF-8需要大写）
+	   Preferences->Genaral->Workspace->Text file encoding->UTF-8  
+	2，增加UTF-8编码声明
+	<meta charset="UTF-8">
+	2，文档应用以UTF-8格式存储（不是UTF-8无BOM格式！）   
+
+5 java查找类在哪个jar里面封装的方式如下：
+
+如果用eclipse选中类名，然后ctrl shift T,就可看到包含比类的包了，如下图：
+
+6 Jar包冲突解决方法
+使用命令
+mvn dependency:tree -Dverbose -Dincludes=<groupId>:<artifactId>
+如：
+mvn dependency:tree -Dverbose -Dincludes=:notify-common
+
+mvn dependency:tree -Dverbose -Dincludes=:spring-web
+
+其他方法：
+
+	1、对于maven工程，我的办法是使用eclipse来解决，点开pom.xml，切换到hierarchy dependency，右上角搜索对应的包，可以清晰地看到冲突版本
+
+	2、可以使用idea，在pom.xml中右单击 选择Diagrams-》show dependencies
+
+	3、mvn dependency:tree -Dverbose > tree.log 
+直接输出冲突的jar文件
+
+
+7 cxf的3.0版本之后可能已经不需要如下配置文件了
+
+	<import resource="classpath:META-INF/cxf/cxf-extension-soap.xml" />
+	<import resource="classpath:META-INF/cxf/cxf-servlet.xml" />
+
+8，Maven加入到Web 发布目录的lib下得方法：
+工程右键Properties->Deployment Assembly->Add->Java Build Path Entries	
+
+
+9,解决cxf，用wsdl2java生成客户端，jaxb与java8不兼容问题
+Create a file named jaxp.properties (if it doesn't exist) under /path/to/jdk1.8.0/jre/lib and then write this line in it:
+
+javax.xml.accessExternalSchema = all
+
+10,批处理文件只调用一行的问题
+比如
+wsdl2java  -p sf.pms.ws.das -d ./src -server gdnew.wsdl
+wsdl2java  -p sf.pms.ws.esb -d ./src -client pmsservie3.wsdl
+wsdl2java  -p sf.pms.ws.gis.base -d ./src -client Base.wsdl
+wsdl2java  -p sf.pms.ws.gis.feature -d ./src -client Feature.wsdl
+改为
+call wsdl2java  -p sf.pms.ws.das -d ./src -server gdnew.wsdl
+call wsdl2java  -p sf.pms.ws.esb -d ./src -client pmsservie3.wsdl
+call wsdl2java  -p sf.pms.ws.gis.base -d ./src -client Base.wsdl
+call wsdl2java  -p sf.pms.ws.gis.feature -d ./src -client Feature.wsdl
+解释：
+wsdl2java命令实际上也是一个批处理，当我的bat调用它的时候最后会走到“处理结束，关闭程序”的这个指令，因此我的bat就被关掉了（他喵的这根本没有经过我的同意！）
+因此，加入call实际上是另开了一个bat去处理这件事情，等他做完之后再继续我的bat下面的行为。
+
+11，wsdl2java生成代码，中文乱码问题
+wsdl2java带参数执行
+wsdl2java  -encoding utf-8
+
+12 [java.lang.ClassNotFoundException: com/sun/tools/internal/xjc/api/XJC]
+先确认eclipse的java环境变量为jdk而不是jre
+
+13 eclipse中查看类所在的jar包
+    ctrl+shift+T
+
+14 CXF wsdl2java 生成代码出现如下错误：
+   The attribute required is undefined for the annotation type XmlElementRef
+   
+   加入如下参数
+   -frontend jaxws21
+   
+   如：
+   wsdl2java -frontend jaxws21 -encoding utf-8 -p sf.pms.ws.gis.feature -d ./src -client Feature.wsdl
+
+15 spring cxf 和spring mvc需要共存是，bean重复加载问题，
+
+   15.1，把cxf 和mvc都依赖的bean包含到一个spring-beans.xml的配置文件中，如下：
+        <?xml version="1.0" encoding="UTF-8"?>  
+		  
+		<beans xmlns="http://www.springframework.org/schema/beans"  
+			xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"  
+			xmlns:context="http://www.springframework.org/schema/context"  
+			xmlns:tx="http://www.springframework.org/schema/tx"  
+			xsi:schemaLocation="http://www.springframework.org/schema/beans  
+									http://www.springframework.org/schema/beans/spring-beans-3.1.xsd  
+									http://www.springframework.org/schema/context   
+									http://www.springframework.org/schema/context/spring-context-3.1.xsd  
+									http://www.springframework.org/schema/tx  
+									http://www.springframework.org/schema/tx/spring-tx-3.1.xsd">  
+		  
+			<context:component-scan base-package="com.huawei.framework" />  
+		  
+			<bean id="propertyConfigurer"  
+				class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">  
+				<property name="locations">  
+					<list>  
+						<value>classpath:jdbc.properties</value>  
+					</list>  
+				</property>  
+			</bean>  
+		  
+			<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">  
+				<property name="driverClass" value="${jdbc.driver}" />  
+				<property name="jdbcUrl" value="${jdbc.url}" />  
+				<property name="user" value="${jdbc.username}" />  
+				<property name="password" value="${jdbc.password}" />  
+				<property name="minPoolSize" value="10" />  
+				<property name="maxPoolSize" value="50" />  
+			</bean>  
+		  
+			<bean id="sessionFactory"  
+				class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">  
+				<property name="dataSource" ref="dataSource" />  
+				<property name="mappingLocations"  
+					value="classpath:/com/huawei/framework/model/**/*.hbm.xml" />  
+				<property name="hibernateProperties">  
+					<props>  
+						<prop key="hibernate.dialect">org.hibernate.dialect.OracleDialect</prop>  
+						<prop key="hibernate.show_sql">true</prop>  
+						<prop key="hibernate.format_sql">true</prop>  
+						<prop key="hibernate.jdbc.fetch_size">50</prop>  
+						<prop key="hibernate.jdbc.batch_size">25</prop>  
+						<prop key="hibernate.temp.use_jdbc_metadata_defaults">false</prop>  
+					</props>  
+				</property>  
+			</bean>  
+		  
+			<bean id="hibernateTemplate" class="org.springframework.orm.hibernate3.HibernateTemplate">  
+				<property name="sessionFactory" ref="sessionFactory" />  
+				<property name="fetchSize" value="10" />  
+			</bean>  
+		  
+			<bean id="transactionManager"  
+				class="org.springframework.orm.hibernate3.HibernateTransactionManager">  
+				<property name="sessionFactory" ref="sessionFactory" />  
+			</bean>  
+		  
+			<tx:annotation-driven transaction-manager="transactionManager" />  
+		  
+		</beans>  
+     15.2 web.xml中配置ContexLoaderListener，用于先加载cxf和公共bean，如下
+	 
+					 <?xml version="1.0" encoding="UTF-8"?>  
+				<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"  
+					xmlns="http://java.sun.com/xml/ns/javaee"  
+					xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"  
+					id="MyFramework" version="3.0">  
+					  
+					<display-name>MyFramework</display-name>  
+					  
+					<context-param>  
+						<param-name>contextConfigLocation</param-name>  
+						<param-value>   
+							WEB-INF/spring-beans.xml,   
+							WEB-INF/spring-cxf.xml  
+						</param-value>   
+					</context-param>  
+					  
+					<listener>    
+						<listener-class>    
+							org.springframework.web.context.ContextLoaderListener    
+						</listener-class>    
+					</listener>    
+					  
+					<servlet>  
+						<servlet-name>framework</servlet-name>  
+						<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>  
+						<init-param>    
+							<param-name>contextConfigLocation</param-name>    
+							<param-value>WEB-INF/spring-mvc.xml</param-value>    
+						</init-param>    
+						<load-on-startup>1</load-on-startup>  
+					</servlet>  
+				  
+					<servlet-mapping>  
+						<servlet-name>framework</servlet-name>  
+						<url-pattern>/</url-pattern>  
+					</servlet-mapping>  
+					  
+					<servlet>    
+						<servlet-name>CXFServlet</servlet-name>    
+						<servlet-class>org.apache.cxf.transport.servlet.CXFServlet</servlet-class>    
+						<load-on-startup>2</load-on-startup>    
+					</servlet>    
+					
+					<servlet-mapping>    
+						<servlet-name>CXFServlet</servlet-name>    
+						<url-pattern>/webservice/*</url-pattern>    
+					</servlet-mapping>    
+					  
+				</web-app>  
