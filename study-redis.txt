@@ -1,0 +1,78 @@
+1,RedisManager无法访问安装再CentOS虚拟机中的redis。
+  window中用如下命令检查端口是否打开：
+    telnet 192.168.1.54 7000
+  *如果window的telnet命令未打开，win10用如下操作，控制面板->程序->启动或关闭window功能->telnet客户端
+  
+  Centos中执行如下命令，查询端口是否开放
+    firewall-cmd --query-port=7000/tcp
+	
+  Centos中配置开放端口：
+    firewall-cmd --add-port=7000/tcp
+	
+2, 手工建Redis集群
+   最小配置的配置文件如下：
+		bind 192.168.1.54
+		port 7000
+		cluster-enabled yes
+		cluster-config-file nodes.conf
+		cluster-node-timeout 5000
+		appendonly yes
+	其中nodes.conf不由人工维护，由集群示例启动是自动创建，并自动更新。
+	下面以6节点集群（3个master节点，3个slaver节点）为例，构建最小集群。先创建测试文件夹，每个文件夹对应一个端口：
+		mkdir cluster-test
+		cd cluster-test
+		mkdir 7000 7001 7002 7003 7004 7005
+	每个节点创建一个redis.conf文件，模板用最上面的最下配置文件夹，但端口号改为和文件夹一致。
+	拷贝可执行执行程序(redis-server)到cluster-test文件夹，开6个终端，启动每个实例：
+	    cd 7000
+		../redis-server ./redis.conf
+	终端上显示的日志如下：
+		[82462] 26 Nov 11:56:55.329 * No cluster configuration found, I'm 97a3a64667477371c4479320d683e4c8db5858b1
+	其中的节点ID在节点的整个生命周期中都不会改变。
+	
+	
+	安装redis gem：
+		gem install redis
+	
+	用redis-trib.rb创建集群
+		./redis-trib.rb create --replicas 1 192.168.1.54:7000 192.168.1.54:7001 192.168.1.54:7002 192.168.1.54:7003 192.168.1.54:7004 192.168.1.54:7005
+		
+	*由于依赖rubby，需要先安装rubby：
+			
+	centos升级rubby方法
+	http://ask.xmodulo.com/upgrade-ruby-centos.html
+	
+	如果已经安装了rubby，先卸载：
+	 sudo yum remove ruby ruby-devel
+	 
+	从源代码安装rubby
+	$ sudo yum groupinstall "Development Tools"
+	$ sudo yum install openssl-devel
+	$ wget https://cache.ruby-lang.org/pub/ruby/2.4/ruby-2.4.1.tar.gz
+	$ tar xvfvz ruby-2.1.2.tar.gz
+	$ cd ruby-2.1.2
+	$ ./configure
+	$ make
+	$ sudo make install
+	
+	升级Rubygems和Bundler:
+	$ sudo gem update --system
+	$ sudo gem install bundler
+	
+	再新的Terminal可以检查新装的ruby版本
+	$ ruby --version
+	$ rubygems --version
+	*rubygems没验证成功
+	
+	
+3，通过脚本创建集群
+	create-cluster start
+	create-cluster create
+	
+4,修改环境变量方法
+    查找ruby安装位置
+		whereis ruby
+	修改环境变量：
+		vim /etc/profile
+	增加
+		export PATH=/usr/local/bin:$PATH 
