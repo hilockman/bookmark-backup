@@ -4,8 +4,8 @@
   *如果window的telnet命令未打开，win10用如下操作，控制面板->程序->启动或关闭window功能->telnet客户端
   
   Centos中执行如下命令，查询端口是否开放
-    firewall-cmd --query-port=7000/tcp
-	
+    firewall-cmd --query-port=7000/tcp --permanent
+	*permanent为永久生效
   Centos中配置开放端口：
     firewall-cmd --add-port=7000/tcp
 	
@@ -37,15 +37,15 @@
 	用redis-trib.rb创建集群
 		./redis-trib.rb create --replicas 1 192.168.1.54:7000 192.168.1.54:7001 192.168.1.54:7002 192.168.1.54:7003 192.168.1.54:7004 192.168.1.54:7005
 		
-	*由于依赖rubby，需要先安装rubby：
+	*由于依赖rubby，需要先安装ruby：
 			
-	centos升级rubby方法
+	centos升级ruby方法
 	http://ask.xmodulo.com/upgrade-ruby-centos.html
 	
 	如果已经安装了rubby，先卸载：
 	 sudo yum remove ruby ruby-devel
 	 
-	从源代码安装rubby
+	从源代码安装ruby
 	$ sudo yum groupinstall "Development Tools"
 	$ sudo yum install openssl-devel
 	$ wget https://cache.ruby-lang.org/pub/ruby/2.4/ruby-2.4.1.tar.gz
