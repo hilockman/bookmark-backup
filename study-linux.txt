@@ -1,6 +1,69 @@
 1 rhel7安装
-boot 分区：引导分区 ，系统启动，grub， 内核
+boot 分区：引导分区 ，系统启动，grub（引导器）， 内核
 swap 分区：内存扩展分区给多大， 一般最多8~16G
 / 根：所有文件的根
 sda 第一块磁盘
 RHEL7默认使用xfs文件系统，RHEL6默认使用ext4
+
+2 vmware 快照
+
+3 linux清屏ctrl+l
+
+4 setup命令进行系统配置
+  NetworkManager进行网络服务配置
+  nmtui修改网络配置，前提NetworkManager.service启动了
+  
+  如果命令唯一，按tab可已补齐命令，按两个tab列出所有命令
+  
+  systemctrl status NetworkManager
+  查看服务状态
+  systemctrl status NetworkManager
+  启动服务
+  
+5 防火墙
+查看防火墙状态
+ systemctl status firewalld.service
+关闭防火墙状态
+systemctl stop firewalld.service
+禁止开机启动
+systemctl disable firewalld.service
+
+6 selinux
+临时关闭
+setenforce 0
+永久关闭
+vim /etc/sysconfig/selinux
+改为
+SELINUX=disabled
+
+7 vim
+撤销操作
+ESC，u
+
+8开机自动挂在光驱
+永久挂载
+vim /etc/fstab
+添加
+/dev/cdrom   /mnt    iso9660 defaults        0 0
+mount -a 验证挂载点
+
+df查看
+*(确保虚拟机右下角光盘图标被点亮，否则系统无法启动）
+
+9 yum源
+
+配置文件地址在以下目录
+/etc/yum.repos.d/
+
+vim rhel7.repo
+[rhel7-server] 源名称，如果多个yum源，yum名称必须唯一
+name=rhel-server 描述信息
+baseurl=file:///mnt （系统盘）文件路径
+enabled=1  启动
+gpgcheck=0 取消验证
+
+清空所有yum
+yum clean
+
+列出所有yum
+yum list
