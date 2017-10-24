@@ -1,3 +1,23 @@
 1 byte与char的区别：
 byte是字节数据类型、有符号型的、占1个字节、大小范围为-128——127
 char是字符数据类型、无符号型的、占2个字节（unicode码）、大小范围为0-65535
+
+2, java classpath
+java -cp test-redisson-mapreduce.jar -jar redisson-all-2.10.3.jar  config.json
+上述命令行执行的意图是redisson-all-2.10.3.jar运行时加载test-redisson-mapreduce.jar，但由于-jar选项，环境变量ClASSPATH和命令行中指定的类路径都被JVM忽略。
+
+正确的运行方式为
+java -cp test-redisson-mapreduce.jar;redisson-all-2.10.3.jar org.redisson.RedissonNode  config.json
+或者
+java -jar redisson-all-2.10.3.jar  config.json
+但需要修改redisson-all-2.10.3.jar中的MANIFEST.MF,通过MANIFEST.MF中的Class-Path 来指定运行时需要用到的其他jar，其他jar可以是当前路径也可以是当前路径下的子目录。多个jar文件之间以空格隔开
+
+MANIFEST.MF文件如下所示
+    Manifest-Version: 1.0
+    Main-Class: com.ibm.portalnews.entrance.Main
+    Class-Path: lib\commons-collections-3.2.jar lib\commons-configuration-1.5.jar lib\commons-lang-2.3.jar lib\commons-logging.jar lib\dom4j-1.6.1.jar lib\jaxen-1.1-beta-7.jar lib\jdom.jar lib\log4j-1.2.14.jar
+其中Manifest-Version表示版本号，一般由IDE工具（如eclipse）自动生成
+    Main-Class 是jar文件的主类，程序的入口
+    Class-Path 指定需要的jar，多个jar必须要在一行上，多个jar之间以空格隔开，如果引用的jar在当前目录的子目录下，windows下使用\来分割，linux下用/分割
+    文件的冒号后面必须要空一个空格，否则会出错
+    文件的最后一行必须是一个回车换行符，否则也会出错
