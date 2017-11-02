@@ -1,0 +1,33 @@
+1 checkbox值读取，解决uncheck，表单（FormData)未赋值问题
+  checkbox checked读取值为'on'
+			var f = $("#state-estimate-config-form");
+			var estimateConfig = f.serializeObject();
+			var checkbox = f.find("input[type=checkbox]");
+			$.each(checkbox, function(key, val) {
+					   estimateConfig[$(val).attr('name')] = ($(val).is(":checked") ? 1 : 0);		
+				});
+				
+2 FormData转换成json对象
+	$.fn.serializeObject = function()
+	{
+		var o = {};
+		var a = this.serializeArray();
+		$.each(a, function() {
+			if (o[this.name]) {
+				if (!o[this.name].push) {
+					o[this.name] = [o[this.name]];
+				}
+				o[this.name].push(this.value || '');
+			} else {
+				o[this.name] = this.value || '';
+			}
+		});
+		return o;
+	};		
+	
+	var sampleConfig = $("#state-sample-config-form").serializeObject();	
+	
+3 input:file 无法设置初始值
+ security reasons.
+ https://stackoverflow.com/questions/20537696/remember-and-repopulate-file-input/20537822#20537822
+ https://stackoverflow.com/questions/1696877/how-to-set-a-value-to-a-file-input-in-html?noredirect=1&lq=1
