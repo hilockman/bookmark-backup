@@ -31,7 +31,7 @@
 	其中的节点ID在节点的整个生命周期中都不会改变。
 	
 	
-	安装redis gem：
+	安装redis gem：（此条必须执行）
 		gem install redis
 	
 	用redis-trib.rb创建集群
@@ -56,13 +56,12 @@
 	$ sudo make install
 	
 	升级Rubygems和Bundler:
-	$ sudo gem update --system
-	$ sudo gem install bundler
+	$ gem update --system
+	$ gem install bundler
 	
 	再新的Terminal可以检查新装的ruby版本
 	$ ruby --version
-	$ rubygems --version
-	*rubygems没验证成功
+
 	
 	
 3，通过脚本创建集群
@@ -76,3 +75,44 @@
 		vim /etc/profile
 	增加
 		export PATH=/usr/local/bin:$PATH 
+		
+5 编译redismanager
+
+call "C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\vcvarsall.bat"
+nuget install -Version 1.8.0 -OutputDirectory ./3rdparty/qredisclient/3rdparty/windows rmt_libssh2 
+set SRCDIR=%cd%
+python ./build/utils/set_version.py %APPVEYOR_BUILD_VERSION% > ./src/version.h
+python ./build/utils/set_version.py %APPVEYOR_BUILD_VERSION% > ./3rdparty/crashreporter/src/version.h
+cd ./3rdparty/crashreporter
+qmake CONFIG+=release DESTDIR=%SRCDIR%/bin/windows/release
+nmake /S /NOLOGO release
+
+cd %SRCDIR%/src
+qmake CONFIG+=release
+nmake /S /NOLOGO release
+
+
+cd %SRCDIR%
+copy /y .\bin\windows\release\rdm.exe .\build\windows\installer\resources\rdm.exe
+
+copy /y .\bin\windows\release\rdm.pdb .\build\windows\installer\resources\rdm.pdb
+
+copy /y .\3rdparty\qredisclient\3rdparty\windows\rmt_openssl.1.1.0.3\build\native\bin\v140\Win32\Release\dynamic\libcrypto-1_1.dll .\build\windows\installer\resources\libcrypto-1_1.dll
+
+copy /y .\3rdparty\qredisclient\3rdparty\windows\rmt_openssl.1.1.0.3\build\native\bin\v140\Win32\Release\dynamic\libssl-1_1.dll .\build\windows\installer\resources\libssl-1_1.dll
+
+copy /y .\3rdparty\qredisclient\3rdparty\windows\rmt_openssl.1.1.0.3\build\native\bin\v140\Win32\Release\dynamic\capi.dll .\build\windows\installer\resources\capi.dll
+        
+copy /y .\3rdparty\qredisclient\3rdparty\windows\rmt_openssl.1.1.0.3\build\native\bin\v140\Win32\Release\dynamic\padlock.dll .\build\windows\installer\resources\padlock.dll
+
+cd build/windows/installer/resources/
+windeployqt --no-translations --compiler-runtime --angle --release --force --qmldir %SRCDIR%/src/qml rdm.exe
+
+
+cd %SRCDIR%
+call "C:\\Program Files (x86)\\NSIS\\makensis.exe" /V1 /DVERSION=%APPVEYOR_BUILD_VERSION%  ./build/windows/installer/installer.nsi
+echo 'Windows build is used only for installer compilation. Skip tests.'
+'Windows build is used only for installer compilation. Skip tests.'
+Collecting artifacts...
+Found artifact 'build\windows\installer\redis-desktop-manager-0.9.0.644.exe' matching 'build\windows\installer\*.exe' path
+Uploading artifacts...

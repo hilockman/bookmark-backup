@@ -1,0 +1,42 @@
+1 docker特点
+  容器使用沙箱机制，相互之间不会有任何接口
+  镜像， 容器
+  
+2 docker安装
+yum remove docker*
+rqm -qa|grep docker
+
+安装
+yum install docker -y
+
+service docker start
+
+
+docker images
+
+docker ps -a
+
+docker rum -f user
+
+docker pull centos
+
+docker load -i docker-centos.tar
+
+docker run -d -it -name centos <image-id>
+
+docker exec -it centos /bin/bash
+
+ps aux|grep docker
+
+docker cp 
+
+vim /etc/profile
+
+容器提交到镜像
+docker commit <container-id> <image-id>
+
+docke cp discovery.jar discovery:/usr/local
+
+docker run -d --link=discovery -p 9000:9000 --name user 
+
+docker cp user service.jar user:/user/local/
