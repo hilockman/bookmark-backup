@@ -1,0 +1,67 @@
+热部署在服务器运行时重新部署软件
+
+热部署：
+ 重新加载整个应用
+热加载
+ 运行时重新加载class
+ 
+ 使用场景
+   热部署:生产环境
+   热加载：开发环境
+   
+   
+1 spring boot热部署方式
+ 1)Springloaded热部署实现
+ 	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+				<dependencies>
+					<dependency>
+						<groupId>org.springframework</groupId>
+						<artifactId>springloaded</artifactId>
+						<version>1.2.6.RELEASE</version>
+					</dependency>
+				</dependencies>
+			</plugin>
+		</plugins>
+	</build>
+	
+    maven启动方式
+ 2) run as java application, 提前下载springloaded.jar
+    虚拟机参数中加-javaagent:D:\workspace_spring\lib\springloaded-1.2.6.RELEASE.jar -noverify
+   java -javaagent:D:\workspace_spring\lib\springloaded-1.2.6.RELEASE.jar -noverify  -jar myapp.jar
+Spring dev tool热部署
+	<dependencies>
+  		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-devtools</artifactId>
+			<optional>true</optional>
+		</dependency>
+	<dependencies>
+	
+2 发布方式
+ 1）构建jar ，命令行运行Srping Boot程序
+2） 构建War包，发布到Tomcat 
+  packaging改为war
+  <packaging>war</packaging>
+  
+  增加tomcat依赖
+<dependency>
+	<groupId>org.springframework.boot</groupId>
+	<artifactId>spring-boot-starter-tomcat</artifactId>
+</dependency>  
+
+ eclipse中maven->update project
+ 
+ 改造Application类
+ 
+@SpringBootApplication
+public class HelloDeploy1Application extends SpringBootServletInitializer {
+
+	@Override
+	protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
+		return builder.sources(HelloDeploy1Application.class);
+	}
+}	

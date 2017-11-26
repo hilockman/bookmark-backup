@@ -2,6 +2,31 @@
   容器使用沙箱机制，相互之间不会有任何接口
   镜像， 容器
   
+  开源应用容器引擎
+  基于LXC，Linux Container 容器是一种内核虚拟化技术
+  
+  Docker核心技术
+  1 Namespace-实现Container的进程、网络、消息、文件系统和主机名的隔离
+  2 Cgroup-实现对资源的配额和度量：cpu个数，内存大小
+  
+  特点：
+  文件系统隔离：
+  资源隔离：系统资源，像CPU和内存等可以分配到不同当然容器中，使用Cgroup
+  网络隔离：
+  日志记录：
+  变更管理：容器文件系统的变更可以提交到新的镜像中，并可以重复使用以创建更多的容器，无需使用模板或手动配置
+  交互式shell：Docker可以分配一个虚拟终端并关联任何容器的标准输入上，例如运行一个一次性交互shell
+  
+  优点：
+  比VM小，比VM快，Docker容器的尺寸减小相比整个虚拟机大大简化了分布到云和从云分发时间和开销。Docker启动实例时间很短，1~2秒
+  对于笔记本电脑，数据中心的虚拟机，以及任何的云上，运行相同的没有变化的应用程序，IT发布速度更快
+  Docker是一个开发的平台，构建，发布和运行分布式应用程序
+  docker时应用程序能够快速从组件组装和避免开发和生产环境之间的摩擦
+  
+  缺点：
+  Docker支持Unix/Linux操作系统，不支持Windows或Mac（即使可以在其上安装，不过也是基于Linux虚拟机）
+  Docker用于应用程序时是最有用的，但并不包含数据。日志，跟踪和数据库等通常应放在Docker容器之外。
+  
 2 docker安装
 yum remove docker*
 rqm -qa|grep docker
@@ -40,3 +65,202 @@ docke cp discovery.jar discovery:/usr/local
 docker run -d --link=discovery -p 9000:9000 --name user 
 
 docker cp user service.jar user:/user/local/
+
+3 通过Yum安装
+配置Docker YUM源
+vim /etc/yum.repos.d/docker.repo
+[dockerrepo]
+name=Docker Respository
+baseurl=http://yum.dockerproject.org/repo/main/centos/7/
+enabled=1
+gpgcheck=0
+
+为了容器实例能上网，修改配置。开通物理机ip路由
+echo 1 > /proc/sys/net/ipv4/ip_forward
+安装
+yum -y install docker-engine
+**下载文件会保存到/var/cache/yum/x86_64/7Server/dockerrepo/packages/， 安装完后会自动删除
+   修改配置/etc/yum.conf
+     keepcache=1
+	可永久保存
+
+启动服务
+systemctl start docker
+
+设置开机启动
+systemctl enabled docker
+
+
+查看Docker 版本
+docker version
+Client:
+ Version:      17.05.0-ce
+ API version:  1.29
+ Go version:   go1.7.5
+ Git commit:   89658be
+ Built:        Thu May  4 22:06:25 2017
+ OS/Arch:      linux/amd64
+
+Server:
+ Version:      17.05.0-ce
+ API version:  1.29 (minimum version 1.12)
+ Go version:   go1.7.5
+ Git commit:   89658be
+ Built:        Thu May  4 22:06:25 2017
+ OS/Arch:      linux/amd64
+ Experimental: false
+
+ 查看镜像，容器：
+ docker info
+ 
+ 从Docker Hub中搜索符合条件的镜像
+ docker search centos
+
+ 导入镜像方法一：从公网，拉镜像，从Docker hub
+ docker pull centos
+ 
+ 导入image方法二：本地归档文件
+ docker load -i centos-latest-docker-image.tar 
+ * -i centos-latest-docker-image.tar  指定载入的镜像归档
+ 
+ 常看images列表
+ docker images
+ 
+ 镜像都安装到了/var/lib/docker/下
+  du -sh /var/lib/docker/可查看
+  
+  运行一个container 并加载镜像centos，运行起来实例后，在实例中执行/bin/bash命令
+  docker run -i -t centos /bin/bash
+   -i 以交互模式运行容器，通常与-t同事使用
+   -t 为容器重新分配一个伪输入终端，通常与-i同时使用
+  查看版本
+     cat /etc/redhat-release
+
+在容器中运行一个长久运行的程序：
+  JOB=$(docker run -d centos /bin/sh -c "while true;do  echo hello world; sleep 1;done")
+  * -d 后台运行容器，并返回容器ID
+   -c 待完成
+   用JOB保存返回的容器ID
+   
+   echo $JOB
+   
+   从一个容器中去日志，查看标准输出或者内容：
+   docker logs Name/ID
+   
+   查看Docker容器中运行的进程
+   docker ps 
+   列出所有运行中的容器
+   
+   杀死容器
+   docker kill 7020bea3f77c
+   
+   停止容器
+   docker stop $JOB
+   启动容器
+   docker start ID
+   重启容器
+   docker restart ID
+   删除容器
+   docker rm -f ID
+    *-f 强制删除，即使容器在运行
+	
+   删除镜像
+   docker rmi image-id
+4 Docker Image制作方法
+   方法一：docker commit，  保存container状态到image，然后生成对应的image
+      启动容器docker run -ti centos /bin/bash
+	  安装nmap
+	    yum install nmap-ncat -y
+	  查看是否安装好：
+		rpm -qa nmap*
+	  退出：
+	     exit
+		 
+	  保存当前状态到image，提交容器为一个image，创建一个安装了nmap-ncat工具的centos镜像
+	    docker-commit <container-id> <image_name>
+		如: docker commit 782861a2f96d centos:nmap-ncat
+		  [root@wangheng71 ~]# docker images
+			REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+			centos              nmap-ncat           ff8850344ed3        9 seconds ago       277MB
+			centos              latest              d123f4e55e12        3 weeks ago         197MB
+	 
+	 使用新的镜像运行一个新的容器
+	 docker run -ti centos:nmap-ncat /bin/bash
+	 
+   方法二：docker build ，通过docker build创建一个基于centos的httpd web服务器镜像
+   使用Dockerfile自动化制作image
+	（一下操作在Docker物理机上）
+   创建工作目录文件夹
+      mkdir /docker-build
+	  cd /docker-build
+   创建文件
+     touch Dockerfile
+	 *类似于make自动化编译时需要Makefile文件，Docker自动化创建镜像是需要Dockerfile
+	  Dockerfile用来创建一个自动的image，包含了用户指定的软件依赖等
+   编辑文件
+      vi Dockerfile
+FROM centos   #FROM 基于本地哪个镜像，
+MAINTAINER userabc <userabc@gmail.com>
+RUN yum -y install httpd  #RUN安装软件用
+ADD start.sh /usr/local/bin/start.sh
+ADD index.html /var/www/html/index.html
+   #ADD 将<src>拷贝到container的文件系统对应路径<dest>，所有拷贝到container中的文件和文件夹权限为0755，uid和gid为0
+   
+   制作脚本
+    echo "/usr/sbin/httpd -DFOREGROUND" > start.sh
+   修改权限
+	chmod a+x start.sh
+	
+   使用命令build来创建新的image
+    docker build -t 父镜像名：自己定义的镜像名 Dockerfile文件所在路径
+	-t：表示tag， 镜像名
+	如：docker build -t centos:httpd .
+	
+   DockerImage发布
+    方法1 ： Save Image to tar
+	docker save -o centos-httpd-docker-image.tar centos:httpd  
+	
+    后期可以使用此镜像：
+	  docker load -i centos-httpd-docker-image.tar 
+	  
+	方法2： Push image to Docker hub
+	1 signup no docker hub & create repo 注册一个账号
+	  https://hub.docker.com/
+	2 login to docker hub
+	 #docker login -u userabc -p abc123 -e uerabc@gmail.com
+	3 Push image to docker hub
+	 #docker push centos:httpd
+	4 Pull image from docker hub
+	  #docker pull userabc/centos:httpd
+
+5 Docker容器端口映射，使用新生成的centos:httpd镜像，启动一个容器，然后把容器中的80端口映射到docker物理机上的9000端口。
+
+  docker run -d -p 9000:80 centos:httpd /bin/sh -c /usr/local/bin/start.sh
+[root@wangheng71 docker-build]# docker run -d -p 9000:80 centos:httpd /bin/sh -c /usr/local/bin/start.sh
+b3feee95c8967746f155b80d55ae5f3912521e97d2f654756fb771b0ce07e412
+[root@wangheng71 docker-build]# docker ps
+CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS                  NAMES
+bfa11219dc45        centos:httpd        "/bin/sh -c /usr/l..."   8 seconds ago       Up 7 seconds        0.0.0.0:9000->80/tcp   priceless_noether
+
+查看端口：
+netstat -antup | grep 9000
+
+访问测试：
+curl http://127.0.0.1:9000
+
+6 访问正在运行中的container
+查看正在运行的容器id
+docker ps
+进入正在运行的容器
+docker exec -ti containt-id /bin/bash
+容器中增加页面
+echo hello world > /var/www/html/test.html
+在物理机上访问测试：
+curl http://127.0.0.1:9000/test.html
+
+容器默认没有ifconfig
+ 方法一通过yum安装
+ yum install net-tools
+ 
+配置容器root密码：
+echo 123456 | passwd --stdin root

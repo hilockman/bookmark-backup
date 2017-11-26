@@ -257,5 +257,29 @@ useradd 用户名
 
 18 删除程序
 yum remove docker*
-	
-	  
+
+19 nmtui 修改主机名称
+使修改生效，通过hostnamectl
+systemctl restart systemd-hostnamed
+查看修改后的状态
+hostnamectl status
+
+20 使用xshell执行图形程序
+编辑修改 /etc/ssh/ssh_config
+    ForwardX11 yes
+安装xauth	
+	yum install xauth  	
+远程服务器 
+ ssh -X root@cm01 	
+
+21 三步实现SSH无密码登录
+到 /root/.ssh目录
+ssh-keygen -t rsa
+id_rsa 私钥
+id_rsa.pub 公钥
+拷贝
+ssh-copy-id 目标机器
+第一次提示输入目标机器的账号密码 
+
+
+ 

@@ -1,0 +1,76 @@
+下载hadoop
+ wget http://mirrors.shuosc.org/apache/hadoop/common/hadoop-2.9.0/hadoop-2.9.0.tar.gz
+ 下载rpm版本jdk
+http://javadl.oracle.com/webapps/download/AutoDL?BundleId=227541_e758a0de34e24606bca991d704f6dcbf
+
+修改ip地址
+vim /etc/sysconfig/network-scripts/ifcfg-eth0
+
+修改hostname
+nmtui 修改主机名称
+
+解压hadoop-2.9.0.tar.gz
+ tar zxvf hadoop-2.9.0.tar.gz
+ mvn hadoop-2.9.0 hadoop
+ mvn hadoop /etc/local
+ 
+配置java环境变量, 再/etc/profile中追加
+JAVA_HOME=/usr/java/default
+PATH=$JAVA_HOME/bin:$PATH
+CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar
+export PATH=$PATH:/usr/local/hadoop/bin:/usr/local/hadoop/sbin
+
+修改/usr/local/hadoop/etc/hadoop/hadoop-env.sh
+export JAVA_HOME=/usr/java/default
+
+
+修改配置/usr/local/hadoop/etc/hadoop/core-site.xml
+<configuration>
+	<property>
+	<name>fs.defaultFS</name>
+	<value>hdfs://cm01:9000</value>
+	</property>
+	<property>
+	<name>hadoop.tmp.dir</name>
+	<value>/var/hadoop</value>
+	</property>
+</configuration>
+
+在namenode上格式化hdfs
+hdfs namenode -format
+
+启动hdfs的namenode
+hadoop-daemon.sh start namenode
+
+用浏览器器打开namenode的50070端⼝
+http://192.168.1.80:50070
+
+启动datanode
+hadoop-daemon.sh start datanode
+
+网页管理权限不足问题
+./hdfs dfs -chmod -R 777 /
+
+
+增加datanode⼦子节点
+虚拟机设置
+1.关闭当前虚拟机
+2.复制虚拟机
+3.修改ip和主机名
+到 /root/.ssh目录
+ssh-keygen -t rsa
+id_rsa 私钥
+id_rsa.pub 公钥
+拷贝
+ssh-copy-id 目标机器
+第一次提示输入目标机器的账号密码
+
+2 hadoop架构
+数据存储服务： hdfs 可用fastDFS，替换
+分布式计算：mapreduce，分布式计算模板，
+分布式协调服务：Yarn，一台机器资源有限，计算任务
+
+相互之间没有依赖，可独立运行
+
+3虚拟机oracle vm box
+
