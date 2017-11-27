@@ -281,5 +281,7 @@ id_rsa.pub 公钥
 ssh-copy-id 目标机器
 第一次提示输入目标机器的账号密码 
 
-
+22 scp拷贝文件
+scp test.tar host:/usr/local
+scp file hostname:`pwd`
  
