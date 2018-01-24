@@ -1,5 +1,5 @@
 # 总结
-!常用地址<http://www.mybatis.org/mybatis-3/zh/>
+*常用地址<http://www.mybatis.org/mybatis-3/zh/>
 ## mysql日期查询是出错，配置url
 SqlMapConfig.xml
 
