@@ -1,2 +1,5 @@
 1 查找类所在的jar包
 ctrl+shift+T
+
+2,把config目录下的文件加入classpath
+ Right on project->project properties-> java build path -> sources tab. You should find all th relevant classpaths. 
