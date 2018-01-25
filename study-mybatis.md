@@ -1,6 +1,8 @@
 # 总结
 
-常用地址<http://www.mybatis.org/mybatis-3/zh/>
+*常用地址 <http://www.mybatis.org/mybatis-3/zh/>
+
+*常用地址 <http://www.cnblogs.com/luoxn28/p/6417892.html>
 
 ## 架构设计
 
