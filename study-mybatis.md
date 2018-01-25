@@ -20,6 +20,7 @@
 xml配置文件文件中的元素
 
 | 名称 | 说明 |
+| -- | -- |
 | property | 属性 |
 | settings | 设置 |
 | typeAliases | 类型别名 |
