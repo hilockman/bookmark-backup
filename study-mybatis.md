@@ -4,6 +4,8 @@
 
 ## 架构设计
 
+![包结构图](http://img.blog.csdn.net/20141028140852531?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbHVhbmxvdWlz/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast)
+
 主要类
 
 | 类名 | 配置文件 | 最佳作用域 |
