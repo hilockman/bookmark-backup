@@ -2,8 +2,10 @@
 
 **目录**
 
-- [MyBatis架构设计](#MyBatis架构设计)
-- [程序技巧](#程序技巧)
++ [MyBatis架构设计](#MyBatis架构设计)
+ - [主要类](#主要类)
++ [程序技巧](#程序技巧)
+
 
 *常用地址 <http://www.mybatis.org/mybatis-3/zh/>
 
