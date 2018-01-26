@@ -1,14 +1,19 @@
-# 总结
+---
+
+**Contents**
+
+- [MyBatis架构设计](#MyBatis架构设计)
+- [MyBatis架构设计](#MyBatis架构设计)
 
 *常用地址 <http://www.mybatis.org/mybatis-3/zh/>
 
 *常用地址 <http://www.cnblogs.com/luoxn28/p/6417892.html>
 
-## 架构设计
+## MyBatis架构设计
 
 ![包结构图](http://img.blog.csdn.net/20141028140852531?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbHVhbmxvdWlz/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast)
 
-主要类
+### 主要类
 
 | 类名 | 配置文件 | 最佳作用域 |
 | --- | --- | -- |
@@ -17,7 +22,7 @@
 | SqlSession | xml配置文件 | 请求或方法作用域。 每个线程都应该有它自己的 SqlSession 实例。也绝不能将 SqlSession 实例的引用放在任何类型的管理作用域中，比如 Servlet 架构中的 HttpSession。 |
 | Mapper Instances | xml映射文件 | 映射器是创建用来绑定映射语句的接口。映射器接口的实例是从 SqlSession 中获得的。因此从技术层面讲，映射器实例的最大作用域是和 SqlSession 相同的，因为它们都是从 SqlSession 里被请求的。 |
 
-xml配置文件文件中的元素
+### xml配置文件文件中的元素
 
 | 名称 | 说明 |
 | -- | -- |
@@ -26,7 +31,7 @@ xml配置文件文件中的元素
 | typeAliases | 类型别名 |
 | typeHandlers | 类型处理器 |
 
-## mysql日期查询是出错，配置url
+### mysql日期查询是出错，配置url
 SqlMapConfig.xml
 
 ```xml
@@ -51,4 +56,32 @@ SqlMapConfig.xml
     </environments>
 
 </configuration>
+```
+
+## 程序技巧
+### 批量插入
+sql映射文件
+```
+<insert id="insertName">
+  insert into names (name) values (#{value})
+</insert>
+```
+java代码
+```
+List<String> names = new ArrayList<String>();
+names.add("Fred");
+names.add("Barney");
+names.add("Betty");
+names.add("Wilma");
+
+SqlSession sqlSession = sqlSessionFactory.openSession(ExecutorType.BATCH);
+try {
+  NameMapper mapper = sqlSession.getMapper(NameMapper.class);
+  for (String name : names) {
+    mapper.insertName(name);
+  }
+  sqlSession.commit();
+} finally {
+  sqlSession.close();
+}
 ```
