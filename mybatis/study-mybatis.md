@@ -2,9 +2,8 @@
 
 ---
 
-**目录**
+***目录***
 
----
 
 + [MyBatis架构设计](#MyBatis架构设计)
   - [主要类](#主要类)
@@ -15,22 +14,25 @@
   - [使用多参数](#使用多参数)
 
 
----
+***参考***
 
-** 参考 **
----
 
 * [MyBatis中文](http://www.mybatis.org/mybatis-3/zh/getting-started.html)
 * [MyBatis英文](http://www.mybatis.org/mybatis-3/index.html) 
-* [MyBatis框架及原理分析](http://www.cnblogs.com/luoxn28/p/6417892.html)
++ 博客
+   - [MyBatis框架及原理分析](http://www.cnblogs.com/luoxn28/p/6417892.html)
+   - [深入理解mybatis原理](http://blog.csdn.net/luanlouis/article/details/40422941)
 
 ---
 
 ## MyBatis架构设计
 
-![包结构图][package-graph]
+| 功能架构设计 | 类结构图 |
+! --- | --- |
+| ![功能架构设计][function-graph] | ![类结构图][package-graph] |
 
 
+[function-graph]:http://img.blog.csdn.net/20141028232313593?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbHVhbmxvdWlz/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast
 [package-graph]:http://img.blog.csdn.net/20141028140852531?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbHVhbmxvdWlz/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast
 
 
