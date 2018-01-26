@@ -1,14 +1,5 @@
 ---
 
-***参考***
-
-* [MyBatis中文](http://www.mybatis.org/mybatis-3/zh/getting-started.html)
-* [MyBatis英文](http://www.mybatis.org/mybatis-3/index.html) 
-* [MyBatis框架及原理分析](http://www.cnblogs.com/luoxn28/p/6417892.html)
-
----
----
-
 ***目录***
 + [MyBatis架构设计](#MyBatis架构设计)
   - [主要类](#主要类)
@@ -19,6 +10,17 @@
   - [使用多参数](#使用多参数)
 
 ---
+
+---
+
+***参考***
+
+* [MyBatis中文](http://www.mybatis.org/mybatis-3/zh/getting-started.html)
+* [MyBatis英文](http://www.mybatis.org/mybatis-3/index.html) 
+* [MyBatis框架及原理分析](http://www.cnblogs.com/luoxn28/p/6417892.html)
+
+---
+
 
 ## MyBatis架构设计
 
