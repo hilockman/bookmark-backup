@@ -6,18 +6,18 @@
 
 ---
 
-- [MyBatis架构设计](#MyBatis架构设计)
++ [MyBatis架构设计](#MyBatis架构设计)
   - [主要类](#主要类)
   - [配置文件](#配置文件)
-- [程序技巧](#程序技巧)
++ [程序技巧](#程序技巧)
   - [批量插入](#批量插入)
   - [SQLLIKE](#SQLLIKE)
   - [使用多参数](#使用多参数)
-- [参考](#参考)
+
 
 ---
 
-## 参考
+** 参考 **
 ---
 
 * [MyBatis中文](http://www.mybatis.org/mybatis-3/zh/getting-started.html)
