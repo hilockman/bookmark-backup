@@ -1,3 +1,5 @@
+# MyBatis学习笔记
+
 ---
 
 **目录**
@@ -126,4 +128,11 @@ xml
 </select>
 ```
 
+## 参考
+---
 
+* [MyBatis中文](http://www.mybatis.org/mybatis-3/zh/getting-started.html)
+* [MyBatis英文](http://www.mybatis.org/mybatis-3/index.html) 
+* [MyBatis框架及原理分析](http://www.cnblogs.com/luoxn28/p/6417892.html)
+
+---
