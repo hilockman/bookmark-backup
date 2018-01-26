@@ -8,18 +8,11 @@
   - [批量插入](#批量插入)
   - [SQL LIKE](#SQL LIKE)
   - [使用多参数](#使用多参数)
++ [参考](#参考)
 
 ---
 
----
 
-***参考***
-
-* [MyBatis中文](http://www.mybatis.org/mybatis-3/zh/getting-started.html)
-* [MyBatis英文](http://www.mybatis.org/mybatis-3/index.html) 
-* [MyBatis框架及原理分析](http://www.cnblogs.com/luoxn28/p/6417892.html)
-
----
 
 
 ## MyBatis架构设计
@@ -133,3 +126,12 @@ xml
   and hashedPassword = #{hashedPassword}
 </select>
 ```
+
+## 参考
+---
+
+* [MyBatis中文](http://www.mybatis.org/mybatis-3/zh/getting-started.html)
+* [MyBatis英文](http://www.mybatis.org/mybatis-3/index.html) 
+* [MyBatis框架及原理分析](http://www.cnblogs.com/luoxn28/p/6417892.html)
+
+---
