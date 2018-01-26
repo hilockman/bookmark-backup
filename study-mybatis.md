@@ -8,17 +8,9 @@
   - [配置文件](#配置文件)
 - [程序技巧](#程序技巧)
   - [批量插入](#批量插入)
-  - [SQL LIKE](#SQL LIKE)
+  - [SQL LIKE](#SQLLIKE)
   - [使用多参数](#使用多参数)
 - [参考](#参考)
-
-  - [工程结构](#工程结构)
-- [Global logging configuration](#global-logging-configuration)
-- [Console output...](#console-output)
-  - [映射文件](#映射文件)
-  - [程序代码](#程序代码)
-  - [总结](#总结)
-
 
 ---
 
@@ -104,7 +96,7 @@ try {
 }
 ```
 
-### SQL LIKE
+### SQLLIKE
 java Code
 ```
 String wildcardName = "%Smi%";
