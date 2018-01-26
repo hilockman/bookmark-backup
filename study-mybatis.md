@@ -1,20 +1,32 @@
 ---
 
-**目录**
+***目录***
 
 + [MyBatis架构设计](#MyBatis架构设计)
   - [主要类](#主要类)
   - [配置文件](#配置文件)
 + [程序技巧](#程序技巧)
+  - [批量插入](#批量插入)
+  - [SQL LIKE](#SQL LIKE)
+  - [使用多参数](#使用多参数)
 
+---
 
-*常用地址 <http://www.mybatis.org/mybatis-3/zh/>
+***参考***
 
-*常用地址 <http://www.cnblogs.com/luoxn28/p/6417892.html>
+* [MyBatis中文](http://www.mybatis.org/mybatis-3/zh/getting-started.html)
+* [MyBatis英文](http://www.mybatis.org/mybatis-3/index.html) 
+* [MyBatis框架及原理分析](http://www.cnblogs.com/luoxn28/p/6417892.html)
+
+---
 
 ## MyBatis架构设计
 
-![包结构图](http://img.blog.csdn.net/20141028140852531?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbHVhbmxvdWlz/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast)
+![包结构图][package-graph]
+
+
+[package-graph]:http://img.blog.csdn.net/20141028140852531?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbHVhbmxvdWlz/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast
+
 
 ### 主要类
 
@@ -62,6 +74,7 @@ SqlMapConfig.xml
 ```
 
 ## 程序技巧
+
 ### 批量插入
 sql映射文件
 ```
@@ -87,4 +100,34 @@ try {
 } finally {
   sqlSession.close();
 }
+```
+
+### SQL LIKE
+java Code
+```
+String wildcardName = "%Smi%";
+List<Name> names = mapper.selectLike(wildcardName);
+```
+xml
+```
+String wildcardName = "%Smi%";
+List<Name> names = mapper.selectLike(wildcardName);
+```
+
+### 使用多参数
+java code
+```
+import org.apache.ibatis.annotations.Param;
+public interface UserMapper {
+   User selectUser(@Param("username") String username, @Param("hashedPassword") String hashedPassword);
+}
+```
+xml
+```
+<select id=”selectUser” resultType=”User”>
+  select id, username, hashedPassword
+  from some_table
+  where username = #{username}
+  and hashedPassword = #{hashedPassword}
+</select>
 ```
