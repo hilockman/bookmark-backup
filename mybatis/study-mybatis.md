@@ -22,7 +22,7 @@
 + 博客
    - [MyBatis框架及原理分析](http://www.cnblogs.com/luoxn28/p/6417892.html)
    - [深入理解mybatis原理](http://blog.csdn.net/luanlouis/article/details/40422941)
-
+   - [Mybatis框架整体设计](http://chenjc-it.iteye.com/blog/1460990)
 ---
 
 ## MyBatis架构设计
