@@ -19,6 +19,7 @@
 
 * [MyBatis中文](http://www.mybatis.org/mybatis-3/zh/getting-started.html)
 * [MyBatis英文](http://www.mybatis.org/mybatis-3/index.html) 
+* [GitHub/mybatis/mybatis-3](https://github.com/mybatis/mybatis-3)
 + 博客
    - [MyBatis框架及原理分析](http://www.cnblogs.com/luoxn28/p/6417892.html)
    - [深入理解mybatis原理](http://blog.csdn.net/luanlouis/article/details/40422941)
@@ -40,7 +41,7 @@
 
 | 类名 | 配置文件 | 最佳作用域 |
 | --- | --- | -- |
-| SqlSessionFactoryBuilder | xml配置文件 | 法作用域（也就是局部方法变量） |
+| SqlSessionFactoryBuilder | xml配置文件 | 方法作用域（也就是局部方法变量） |
 | SqlSessionFactory | xml配置文件 | 应用作用域，单例模式或者静态单例模式 |
 | SqlSession | xml配置文件 | 请求或方法作用域。 每个线程都应该有它自己的 SqlSession 实例。也绝不能将 SqlSession 实例的引用放在任何类型的管理作用域中，比如 Servlet 架构中的 HttpSession。 |
 | Mapper Instances | xml映射文件 | 映射器是创建用来绑定映射语句的接口。映射器接口的实例是从 SqlSession 中获得的。因此从技术层面讲，映射器实例的最大作用域是和 SqlSession 相同的，因为它们都是从 SqlSession 里被请求的。 |
