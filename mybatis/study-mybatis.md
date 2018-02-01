@@ -24,6 +24,9 @@
    - [MyBatis框架及原理分析](http://www.cnblogs.com/luoxn28/p/6417892.html)
    - [深入理解mybatis原理](http://blog.csdn.net/luanlouis/article/details/40422941)
    - [Mybatis框架整体设计](http://chenjc-it.iteye.com/blog/1460990)
++ 源码分析
+   - [mybatis源码中文注释](https://github.com/tuguangquan/mybatis)
+   - [mybatis中文注释并附带图解架构](https://github.com/nero520/mybatis)
 ---
 
 ## MyBatis架构设计
@@ -45,6 +48,10 @@
 | SqlSessionFactory | xml配置文件 | 应用作用域，单例模式或者静态单例模式 |
 | SqlSession | xml配置文件 | 请求或方法作用域。 每个线程都应该有它自己的 SqlSession 实例。也绝不能将 SqlSession 实例的引用放在任何类型的管理作用域中，比如 Servlet 架构中的 HttpSession。 |
 | Mapper Instances | xml映射文件 | 映射器是创建用来绑定映射语句的接口。映射器接口的实例是从 SqlSession 中获得的。因此从技术层面讲，映射器实例的最大作用域是和 SqlSession 相同的，因为它们都是从 SqlSession 里被请求的。 |
+
+### 主要包
+|名称|结构|参考|类图|
+
 
 ### 配置文件
 

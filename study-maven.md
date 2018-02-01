@@ -1,26 +1,43 @@
 # study-maven
-http://books.sonatype.com/mvnex-book/reference/index.html
 
-1创建一个简单工程
+**参考**
+- [Maven by Example][Maven by Example]
+- [项目管理利器——maven][项目管理利器——maven]
+
+[Maven by Example]:http://books.sonatype.com/mvnex-book/reference/index.html
+[项目管理利器——maven]:http://www.imooc.com/learn/443
+
+
+## FAQ
+
+1 创建一个简单工程
+```
 mvn archetype:generate -DgroupId=org.sonatype.mavenbook -DartifactId=simple -DpackageName=org.sonatype.mavenbook -Dversion=1.0-SNAPSHOT
+```
 
 安装
 cd到工程目录simple
+```
 mvn install
+```
 
 运行
 cd 编译发布目录simple\target
+```
 java -cp simple-1.0-SNAPSHOT.jar org.sonatype.mavenbook.App
+```
 
-2每个maven工程中的pom有道父工程，maven配置，用户配置，以及子集(profile)的影响。通过
+2 每个maven工程中的pom有道父工程，maven配置，用户配置，以及子集(profile)的影响。通过
 mvn help:effective-pom
 可以看到实际的pom
 
 3 Maven的生命周期由多个插件完成，Maven插件包含多个目标。目标引用的格式一般如下：
+```
   pluginId:goalId -DparamName=paramValue
+```
 
 4 Maven生命周期
-Maven有三套相互独立的生命周期，请注意这里说的是“三套”，而且“相互独立”，初学者容易将Maven的生命周期看成一个整体，其实不然。这三套生命周期分别是：
+Maven有三套相互独立的生命周期，请注意这里说的是"三套"，而且"相互独立"，初学者容易将Maven的生命周期看成一个整体，其实不然。这三套生命周期分别是：
 Clean Lifecycle 在进行真正的构建之前进行一些清理工作。
 Default Lifecycle 构建的核心部分，编译，测试，打包，部署等等。
 Site Lifecycle 生成项目报告，站点，发布站点。
@@ -76,19 +93,27 @@ Maven的依赖不仅是一个jar文件，它是一个POM文件，其申明了对
 Maven提供了不同的依赖范围（dependency scopes)。当一个依赖声明为test范围，表示它不能用于Complier插件的compile目标，它将被添加到compiler:testCompiler和surefire:test目标的类路径中。使用provided范围可以把某种依赖排除再WAR文件之外。
 
 8 创建一个用户化的工程
+```
 mvn archetype:generate -DgroupId=org.sonatype.mavenbook.custom -DartifactId=simple-weather -Dversion=1.0
+```
 
 9 获得某个插件的描述
+```
 mvn help:describe -Dplugin=exec -Dfull
+```
 
 10 exec插件可以方面的执行程序，而不用声明类路径
+```
 mvn exec:java -Dexec.mainClass=org.sonatype.mavenbook.weather.Main
-
+```
 11 查看依赖关系
+```
 mvn dependency:resolve
+```
 
 12 可通过配置忽略测试失败
 一般情况，Maven遇到一个失败时，构建就会停止。可配置testFailureIgnore属性为true来配置SurefirePlugin，使得即使遇到测试失败，也能继续进行构建
+```xml
 <project>
   <build>  
      <plugins>
@@ -102,12 +127,17 @@ mvn dependency:resolve
 	 </plugins>
   </build>
 </project>
+```
+
 同样可通过命令行设置
+```xml
 mvn test -Dmaven.test.failure.ignore=true
+```
 
 跳过测试的命令行设置：
 mvn install -Dmaven.test.skip=true
 跳过测试POM配置:
+```xml
 <project>
   <build>  
      <plugins>
@@ -121,9 +151,11 @@ mvn install -Dmaven.test.skip=true
 	 </plugins>
   </build>
 </project>
+```
 
 13 通过Maven Assembly 插件自定义应用的发布
 需要再POM中添加Maven Assembly描述
+```xml
 <project>
   [...]
   <build>  
@@ -140,6 +172,7 @@ mvn install -Dmaven.test.skip=true
   </build>
   [...]
 </project>
+```
 
 执行组装命令如下：
 mvn install assembly:assembly
@@ -148,6 +181,7 @@ maven执行到install生命周期(lifecycle)后，又执行了assembly:assembly�
 通过上面的配置生成单一的可执行的jar包
 
 通过把assembly:assembly目标绑定到Maven的package生命周期做法更常规，配置如下：
+```
 <project>
   [...]
   <build>  
@@ -173,11 +207,15 @@ maven执行到install生命周期(lifecycle)后，又执行了assembly:assembly�
   </build>
   [...]
 </project>
+```
 
 13 创建一个简单的web工程
+```
 mvn archetype:generate -DgroupId=org.sonatype.mavenbook.simpleweb -DartifactId=simple-webapp -DpackageName=org.sonatype.mavenbook -Dversion=1.0-SNAPSHOT
-选择maven-archetype-webapp，可能1010
-修改编译时依赖的java版本为1.8
+```
+
+选择maven-archetype-webapp，可能修改编译时依赖的java版本为1.8
+```xml
   <build>
     <finalName>simple-webapp</finalName>
 	<plugins>
@@ -191,9 +229,11 @@ mvn archetype:generate -DgroupId=org.sonatype.mavenbook.simpleweb -DartifactId=s
 	  </plugin>
 	</plugins>
   </build>
+```
 
 通过jetty Servle容器运行web应用
 首先添加Jetty插件
+```
 	<build>
 		<plugins>
 			<plugin>
@@ -203,11 +243,13 @@ mvn archetype:generate -DgroupId=org.sonatype.mavenbook.simpleweb -DartifactId=s
 			</plugin>
 		</plugins>
 	</build>
+```
 	
 mvn jetty:run
 注意在window操作系统中，用jetty运行web引用，本地仓库的路径中不能包含空格。工程运行后的url为http://localhost:8080/simple-webapp
 
 添加对Servlet Api的依赖
+```xml
 <project>
   [...]
   <dependencies>
@@ -220,6 +262,7 @@ mvn jetty:run
   </dependencies>
   [...]
 </project>
+```
 
 privided范围声明，表示jar包不能包含再WAR内
 
@@ -227,10 +270,12 @@ privided范围声明，表示jar包不能包含再WAR内
 生成前先删除WeatherWebService.xml中的ws:import,否则无法生成客户端
 wsimport -s src/main/java -p com.bj.znd.weather src/main/resources/WeatherWebService.xml
 运行：
+```
 mvn exec:java -Dexec.mainClass=com.bj.znd.App -Dexec.args="上海" 
-
+```
 15 父子模块
 父工程只是提供一个pom文件，在pom文件中包含子模块，父工程的一些配置将会被所有子模块所继承。父工程pom文件类似如下：
+```
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" 
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -272,8 +317,10 @@ mvn exec:java -Dexec.mainClass=com.bj.znd.App -Dexec.args="上海"
     </dependency>
   </dependencies>
 </project>
+```
 
 子模块通Maven坐标引用父工程的
+```
 <project>
   [...]
   <parent>
@@ -283,26 +330,33 @@ mvn exec:java -Dexec.mainClass=com.bj.znd.App -Dexec.args="上海"
   </parent>
   [...]
 </project>
+```
 
 16 创建模板
+```
 mvn archetype:generate -DgroupId=com.znd.plugins \
 -DartifactId=statis-maven-plugin \
 -DpackageName=com.znd.plugins \
 DarchetypeArtifactId=maven-archetype-plugin \
 -Dversion=1.0 
+```
 
 缩短命令行
 有几种方式缩短输入：
 1,如果运行本地仓库安装的最新版插件，可以省略版本号。使用”mvn sample.plugin:hello-Maven-plugin:sayhi”运行。
 2,赋予插件一个短前缀，如mvn hello:sayhi。如果按照${prefix}-maven-plugin的命名方式（如果插件是Apache Maven的官方插件用maven-${prefix}-plugin）这是自动完成的。也可以通过额外的配置设置前缀，更多信息参见Introduction to Plugin Prefix Mapping。
 3,最后，可以把插件的组id加入默认搜索的组id列表。这种方式需要在${user.home}/.m2/settings.xml中增加如下配置：
+```xml
 <pluginGroups>
   <pluginGroup>sample.plugin</pluginGroup>
 </pluginGroups>
+```
+
 此时，可以用”mvn hello:sayhi”运行Mojo了。
 
 将Mojo关联到构建生命周期
 你也可以配置插件关联到构建生命周期某个特定阶段的指定目标，示例如下：
+```xml
 <build>
    <plugins>
      <plugin>
@@ -320,6 +374,7 @@ DarchetypeArtifactId=maven-archetype-plugin \
      </plugin>
    </plugins>
  </build>
+ ```
 这样Java代码编译时这个简单Mojo就会执行。更多绑定Mojo到生命周期阶段的信息
 
 17 优化依赖
@@ -327,6 +382,7 @@ DarchetypeArtifactId=maven-archetype-plugin \
 2) 用内建的工程version和groupId用于引用兄弟工程
 通过dependencyManager声明可以避免依赖复制和子模块依赖不匹配。
 在父工程中申明依赖管理
+```xml
 <project>
 	...
 	<dependencyManagement>
@@ -366,7 +422,10 @@ DarchetypeArtifactId=maven-archetype-plugin \
 	</dependencyManagement>
 	...
 </project>
+```
+
 简化后的子工程配置如下。区别为子工程不用申明版本号了
+```xml
 <project>
 ...
 <dependencies>
@@ -381,7 +440,10 @@ DarchetypeArtifactId=maven-archetype-plugin \
 	</dependencies>
 ...
 </project>
+```
+
 在父工程中修复hibernate-annotations和hibernate-commons-annotations的版本重复声明
+```xml
 <project>
 	...
 	<properties>
@@ -403,8 +465,10 @@ DarchetypeArtifactId=maven-archetype-plugin \
 	</dependencyManagement>
 	...
 </project>
+```
 
 在父工程定义子工程的版本，或者用内建属性保证子版本号一致性：
+```xml
 <project>
 	...
 	<dependencies>
@@ -423,9 +487,11 @@ DarchetypeArtifactId=maven-archetype-plugin \
 	</dependencies>
 	...
 </project>
+```
 
 18 插件管理
 类似于依赖管理，可在父工程中声明插件管理，用来简化字工程的插件声明
+```xml
 <project>
 ...
 <build>
@@ -464,7 +530,7 @@ DarchetypeArtifactId=maven-archetype-plugin \
 	</build>
 ...
 </project>
-
+```
 
 19 由于Maven支持传递依赖，因此最好显示声明工程代码的所有依赖，依赖升级后，传递依赖失效。
 通过dependency插件可以分析使用了的依赖，但未声明的依赖。
@@ -473,8 +539,10 @@ dependency:tree     列出所有直接和传递依赖
 
 
 20,Maven增加外部jar
+
 使用springboot插件的条件下
 时system域下声明的jar包能添加到最终的单一jar包内
+```xml
 	<build>
 		<plugins>
 			<plugin>
@@ -486,8 +554,11 @@ dependency:tree     列出所有直接和传递依赖
 			</plugin>
 		</plugins>
 	</build>
+```
 	
-	依赖生命
+配置依赖生命
+
+```xml
 	<dependency>
 		<groupId>com.znd</groupId>
 		<artifactId>com.znd.memdb</artifactId>
@@ -495,9 +566,11 @@ dependency:tree     列出所有直接和传递依赖
 		<scope>system</scope>
 		<systemPath>${project.basedir}/lib/ZhongNDMemDB.jar</systemPath>
 	</dependency>	
+```
 	
-	发布jar到一个远程仓库中
-   http://maven.apache.org/guides/mini/guide-3rd-party-jars-remote.html
+	[发布jar到一个远程仓库中](http://maven.apache.org/guides/mini/guide-3rd-party-jars-remote.html)
+```xml
+	
    mvn deploy:deploy-file -DgroupId=<group-id> \
   -DartifactId=<artifact-id> \
   -Dversion=<version> \
@@ -505,8 +578,10 @@ dependency:tree     列出所有直接和传递依赖
   -Dfile=<path-to-file> \
   -DrepositoryId=<id-to-map-on-server-section-of-settings.xml> \
   -Durl=<url-of-the-repository-to-deploy>
+```
    
 21 Maven复制jar到指定目录
+```xml
 <build>
    <plugins>
            <plugin>   
@@ -532,8 +607,10 @@ dependency:tree     列出所有直接和传递依赖
             </plugin>
    </plugins>		
 </build>
+```
 
 22编译后的jar上传nexus
+```xml
     <distributionManagement>
         <snapshotRepository>
             <id>snapshots</id>
@@ -547,7 +624,10 @@ dependency:tree     列出所有直接和传递依赖
             <url>http://191.168.2.1:8081/repository/maven-releases/</url>
         </repository>
     </distributionManagement>   
+```
+	
 关于nexus的登录名和密码，需要在maven的setting.xml中配置：
+```xml
 	<server>
         <id>releases</id>
         <username>admin</username>
@@ -558,8 +638,11 @@ dependency:tree     列出所有直接和传递依赖
         <username>admin</username>
         <password>admin123</password>
     </server>
+```
 	
 23 通过maven-antrun-plugin重命名文件：
+
+```
 	<build>
 		<plugins>
             <plugin>   
@@ -588,3 +671,20 @@ dependency:tree     列出所有直接和传递依赖
             </plugin>			
 		</plugins>
 	</build>
+```	
+
+24 单元测试
+由于Surefire的限制，默认的单元测试名称应该为*Test(s)。如果想改变命名规则则必须修改插件配置，但不推荐
+```xml
+<plugins>
+    <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <configuration>
+            <includes>
+                <include>**/Test*.java</include>
+            </includes>
+        </configuration>
+    </plugin>
+</plugins>
+```
