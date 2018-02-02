@@ -9,10 +9,29 @@
 
 
 ## FAQ
-
-1 创建一个简单工程
++ 工程创建
+  - [创建一个简单工程](#创建一个简单工程)
+  - [创建一个用户化的工程](#创建一个用户化的工程)
++ pom操作
+  - [查看有效pom](#查看有效pom)
+  - [Maven生命周期](#Maven生命周期)
+  - [Maven工程的唯一坐标](#Maven工程的唯一坐标)
+  - [Maven仓库](#Maven仓库)
+  - [依赖管理](#依赖管理)
+  - [查看依赖关系](#查看依赖关系)
+  - [获得某个插件的描述](#获得某个插件的描述)
+  - [exec插件](#exec插件)
+  + [跳过生命周期](#跳过生命周期)
+    
+ 
+### 创建一个简单工程
 ```
 mvn archetype:generate -DgroupId=org.sonatype.mavenbook -DartifactId=simple -DpackageName=org.sonatype.mavenbook -Dversion=1.0-SNAPSHOT
+```
+
+# 创建一个用户化的工程
+```
+mvn archetype:generate -DgroupId=org.sonatype.mavenbook.custom -DartifactId=simple-weather -Dversion=1.0
 ```
 
 安装
@@ -27,16 +46,18 @@ cd 编译发布目录simple\target
 java -cp simple-1.0-SNAPSHOT.jar org.sonatype.mavenbook.App
 ```
 
-2 每个maven工程中的pom有道父工程，maven配置，用户配置，以及子集(profile)的影响。通过
+### 查看有效pom
+每个maven工程中的pom有道父工程，maven配置，用户配置，以及子集(profile)的影响。通过
 mvn help:effective-pom
 可以看到实际的pom
 
-3 Maven的生命周期由多个插件完成，Maven插件包含多个目标。目标引用的格式一般如下：
+### Maven生命周期
+
+Maven的生命周期由多个插件完成，Maven插件包含多个目标。目标引用的格式一般如下：
 ```
   pluginId:goalId -DparamName=paramValue
 ```
 
-4 Maven生命周期
 Maven有三套相互独立的生命周期，请注意这里说的是"三套"，而且"相互独立"，初学者容易将Maven的生命周期看成一个整体，其实不然。这三套生命周期分别是：
 Clean Lifecycle 在进行真正的构建之前进行一些清理工作。
 Default Lifecycle 构建的核心部分，编译，测试，打包，部署等等。
@@ -82,36 +103,39 @@ verify
 install     将包安装至本地仓库，以让其它项目依赖。
 deploy     将最终的包复制到远程的仓库，以让其它开发人员与项目共享。
 
-5 工程的唯一坐标为groupId:artifactId:version:packaging
+### Maven工程的唯一坐标
+  groupId:artifactId:version:packaging
 
-6 Maven仓库即是一个外部仓库的本地缓存，又是本地工程能够相互依赖的机制。
+### Maven仓库
+  即是一个外部仓库的本地缓存，又是本地工程能够相互依赖的机制。
 
-7依赖管理。
+### 依赖管理
 Maven支持传递依赖(transitive dependency)是Maven最强大的特征之一。
 当安装你的的工程到本地仓库时，Maven发布了一个稍微修改了的工程POM文件到jar包所在目录。存储一个POM文件再仓库中可以给别的工程提供关于次工程的信息，最重要的信息有它所依赖的其他工程。
 Maven的依赖不仅是一个jar文件，它是一个POM文件，其申明了对其他工程的依赖。
 Maven提供了不同的依赖范围（dependency scopes)。当一个依赖声明为test范围，表示它不能用于Complier插件的compile目标，它将被添加到compiler:testCompiler和surefire:test目标的类路径中。使用provided范围可以把某种依赖排除再WAR文件之外。
 
-8 创建一个用户化的工程
-```
-mvn archetype:generate -DgroupId=org.sonatype.mavenbook.custom -DartifactId=simple-weather -Dversion=1.0
-```
 
-9 获得某个插件的描述
+
+### 获得某个插件的描述
 ```
 mvn help:describe -Dplugin=exec -Dfull
 ```
 
-10 exec插件可以方面的执行程序，而不用声明类路径
+### exec插件
+
+可以方面的执行程序，而不用声明类路径
 ```
 mvn exec:java -Dexec.mainClass=org.sonatype.mavenbook.weather.Main
 ```
-11 查看依赖关系
+### 查看依赖关系
 ```
 mvn dependency:resolve
 ```
 
-12 可通过配置忽略测试失败
+### 跳过生命周期
+
+#### 忽略测试失败
 一般情况，Maven遇到一个失败时，构建就会停止。可配置testFailureIgnore属性为true来配置SurefirePlugin，使得即使遇到测试失败，也能继续进行构建
 ```xml
 <project>
@@ -131,7 +155,7 @@ mvn dependency:resolve
 
 同样可通过命令行设置
 ```xml
-mvn test -Dmaven.test.failure.ignore=true
+mvn clean test -Dmaven.test.failure.ignore=true
 ```
 
 跳过测试的命令行设置：
@@ -152,6 +176,13 @@ mvn install -Dmaven.test.skip=true
   </build>
 </project>
 ```
+
+| 阶段 | 设置 |
+| -- | -- |
+| javadoc | -Dmaven.javadoc.skip=true |
+| test | -Dmaven.test.failure.ignore=true |
+
+
 
 13 通过Maven Assembly 插件自定义应用的发布
 需要再POM中添加Maven Assembly描述
@@ -181,7 +212,7 @@ maven执行到install生命周期(lifecycle)后，又执行了assembly:assembly�
 通过上面的配置生成单一的可执行的jar包
 
 通过把assembly:assembly目标绑定到Maven的package生命周期做法更常规，配置如下：
-```
+```xml
 <project>
   [...]
   <build>  
@@ -233,7 +264,7 @@ mvn archetype:generate -DgroupId=org.sonatype.mavenbook.simpleweb -DartifactId=s
 
 通过jetty Servle容器运行web应用
 首先添加Jetty插件
-```
+```xml
 	<build>
 		<plugins>
 			<plugin>
@@ -275,7 +306,7 @@ mvn exec:java -Dexec.mainClass=com.bj.znd.App -Dexec.args="上海"
 ```
 15 父子模块
 父工程只是提供一个pom文件，在pom文件中包含子模块，父工程的一些配置将会被所有子模块所继承。父工程pom文件类似如下：
-```
+```xml 
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" 
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -320,7 +351,7 @@ mvn exec:java -Dexec.mainClass=com.bj.znd.App -Dexec.args="上海"
 ```
 
 子模块通Maven坐标引用父工程的
-```
+```xml
 <project>
   [...]
   <parent>
@@ -673,7 +704,7 @@ dependency:tree     列出所有直接和传递依赖
 	</build>
 ```	
 
-24 单元测试
+24 单元测试对类名的限制
 由于Surefire的限制，默认的单元测试名称应该为*Test(s)。如果想改变命名规则则必须修改插件配置，但不推荐
 ```xml
 <plugins>
@@ -687,4 +718,41 @@ dependency:tree     列出所有直接和传递依赖
         </configuration>
     </plugin>
 </plugins>
+```
+
+25 ### 单元测试对失败后快速结束测试
+
+实现一个RunListener类，如：
+```java
+package com.jeeatwork.java.examples.junit.failfast;
+
+import org.junit.runner.notification.Failure;
+import org.junit.runner.notification.RunListener;
+
+public class FailFastListener extends RunListener {
+
+	@Override
+	public void testFailure(Failure failure) throws Exception {
+		System.exit(-1);
+	}
+}
+```
+修改Surfie插件配置
+```xml
+...
+<plugin>
+    <groupId>org.apache.maven.plugins</groupId>
+    <artifactId>maven-surefire-plugin</artifactId>
+    <version>2.18.1</version>
+    <configuration>
+        <threadCount>1</threadCount>
+        <properties>
+            <property>
+                <name>listener</name>
+                <value>com.jeeatwork.java.examples.junit.failfast.FailFastListener</value>
+            </property>
+        </properties>
+    </configuration>
+</plugin>
+...
 ```
