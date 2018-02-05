@@ -2,6 +2,7 @@
 
 ## spring-boot examples
   - [spring-boot examples](https://github.com/ityouknow/spring-boot-examples)
+  - [手把手教你整合最优雅SSM框架：SpringMVC + Spring + MyBatis](https://github.com/liyifeng1994/ssm)
   
 ## 基于thymeleaf的blog项目
  - [spring boot + thymeleaf 开发的个人博客系统](https://github.com/eumji025/EumJi-blog)
