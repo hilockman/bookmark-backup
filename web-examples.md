@@ -9,7 +9,10 @@
  - [SpringBoot + Mybatis + thymeleaf 搭建的个人博客](https://github.com/zhisheng17/blog)
  - [My Blog](https://github.com/ZHENFENG13/My-Blogz)
  - [Best beautiful java blog](https://github.com/otale/tale)
-
-#系统运维
+ 
+## 系统运维
   - [自动化运维平台](https://github.com/guohongze/adminset)
   - [ssh实时监控](https://github.com/jimmy201602/webterminal)
+
+## 其他
+   - [展示板模板](https://github.com/ppoffice/hexo-theme-icarus)
