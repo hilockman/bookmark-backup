@@ -133,7 +133,7 @@ public class App
         
         int left = strs.size() %  colSum;
         if (left > 0) {
-        	maxRowCount = (strs.size() - left) / (colSum - 1);
+        	maxRowCount = (strs.size() - left) / colSum + 1;
         } else {
         	maxRowCount = strs.size() / colSum;
         }
