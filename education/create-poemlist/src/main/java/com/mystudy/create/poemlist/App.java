@@ -88,9 +88,17 @@ public class App
         if (!outDir.exists()) {
         	outDir.mkdirs();
         }
-  
-        BufferedWriter w  = new BufferedWriter(new FileWriter(outPath+"/poemlist.md"));
         
+        InputStream source = App.class.getClassLoader().getResourceAsStream("md.template");
+  
+        BufferedReader r = new BufferedReader(new InputStreamReader(source));
+        String line = null;
+        
+        BufferedWriter w  = new BufferedWriter(new FileWriter(outPath+"/poemlist.md"));
+        while ((line  = r.readLine()) != null) {
+        	w.append(line);
+        	w.newLine();
+        }
         
         if (stream == null) {
         	System.out.println("Fail to find "+fileName);
@@ -174,7 +182,7 @@ public class App
         writeLine(w, " ");
         String url = "https://baike.baidu.com/item";
         for (PoemItem poem : strs) {
-        	String line = String.format("[%s]:%s/%s",poem.getTitle(),url,poem.getTitle());
+        	line = String.format("[%s]:%s/%s",poem.getTitle(),url,poem.getTitle());
         	System.out.println(line);
         	
         	writeLine(w, line);
