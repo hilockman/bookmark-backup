@@ -24,7 +24,7 @@
    - [MyBatis框架及原理分析](http://www.cnblogs.com/luoxn28/p/6417892.html)
    - [深入理解mybatis原理](http://blog.csdn.net/luanlouis/article/details/40422941)
    - [Mybatis框架整体设计](http://chenjc-it.iteye.com/blog/1460990)
-   - [终结篇：MyBatis原理深入解析](https://www.jianshu.com/p/ec40a82cae28)
+   - [MyBatis原理深入解析](https://www.jianshu.com/p/ec40a82cae28)
 + 源码分析
    - [mybatis源码中文注释](https://github.com/tuguangquan/mybatis)
    - [mybatis中文注释并附带图解架构](https://github.com/nero520/mybatis)
