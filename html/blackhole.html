@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+  <head>
+     <meta></meta>
+	<style>
+		body {
+			background-color : darkblue;
+		}
+
+		.cylinder {
+			animation-iteration-count: infinite;
+			animation-name: tunnel;
+		}
+		.cylinder:nth-child(1){
+		}
+		.cylinder:nth-child(2){
+		}
+
+		/*每个切片处理*/
+		.side:nth-child(1){
+		  background-position: -2em;
+		  transform: rotateY(22.5deg) tranlate3d(-50%);
+		}
+		.side:nth-child(2){
+		  background-position: -4em;
+		  transform: rotateY(45deg) tranlate3d(-50%);
+		}
+		.side:nth-child(3){
+		  background-position: -6em;
+		  transform: rotateY(67.5deg) tranlate3d(-50%);
+		}
+		.side:nth-child(16){
+		  background-position: -32em;
+		  transform: rotateY(360deg) tranlate3d(-50%);
+		}
+		@keyframes tunnel {
+		   -webkit-transform: rotateX(9deg);
+		   transform:rotateX(90deg) rotateY(60deg) translateY(-15em);
+		}
+	</style>
+  </head>
+  <body>
+    <div class="cylinder">
+	  <div class="side">1</div>
+	  <div class="side">2</div>
+	  <div class="side">3</div>
+	  <div class="side">4</div>
+	  <div class="side"></div>
+	  <div class="side"></div>
+	</div>
+	
+    <div class="cylinder">
+	  <div class="side"></div>
+	  <div class="side"></div>
+	  <div class="side"></div>
+	  <div class="side"></div>
+	  <div class="side"></div>
+	  <div class="side"></div>
+	</div>   
+  </body>
+</html>

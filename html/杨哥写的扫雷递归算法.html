@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		html,body{
+			width: 100%;
+			height: 100%;
+			margin: 0;
+			padding: 0;
+		}
+		#sl{
+			padding:20px;
+		}
+		#sl span{
+			display: inline-block;
+			width: 19px;
+			height: 19px;
+			background-color: #abcdef;
+			border: 1px solid #ccc;
+			margin:1px;
+			cursor: pointer;
+			font-size: 12px;
+			text-align: center;
+			line-height: 19px;
+			float: left;
+		}
+		#sl span:hover{
+			background-color: #f2b0b0;
+		}
+		#sl span.boom{
+			background-color: #272727;
+		}
+		#sl span.saf{
+			background-color: #fff;
+		}
+	</style>
+</head>
+<body>
+	<div id="sl"></div>
+	<script>
+		var arr = newMap();
+		function newMap(r,c){
+			r = r||10;
+			c = c||10;
+			var arr = [];
+			for(var i=0;i<r;i++){
+				var row = [];
+				for(var j=0;j<c;j++){
+					row[j]=-1;
+				}
+				arr.push(row);
+			}
+			var count = 10;
+			while(count>0){
+				var x = Math.floor(Math.random()*10)%r;
+				var y = Math.floor(Math.random()*10)%c;
+				if(arr[x][y]!=9){
+					arr[x][y] = 9;
+					count--;
+				}
+			}
+			return arr;
+		}
+		print();
+		function print(){
+			for (var i = 0; i < arr.length; i++) {
+				console.log(arr[i].join("\t"));
+				console.log("");
+			}
+			console.log("=========================");
+		}
+		function drawMap(){
+			var html = "";
+			for(var i=0;i<arr.length;i++){
+				for(var j=0;j<arr[i].length;j++){
+					if(arr[i][j]==-1||arr[i][j]==9){
+						html+="<span onclick='clickBlock("+i+","+j+",this)'></span>";
+					}else if(arr[i][j]==0){
+						html+="<span class='saf'></span>";
+					}else{
+						html+="<span class='saf'>"+arr[i][j]+"</span>";
+					}
+				}
+				html+="<i style='float:left;clear:left'></i>";
+			}
+			sl.innerHTML = html;
+		}
+		drawMap();
+		function clickBlock(i,j){
+			if(arr[i][j]===9){
+				alert("点到雷了,游戏结束");
+				arr = newMap();
+			}else{
+				countBoom(i,j);
+			}
+			drawMap();
+		}
+		function countBoom(i,j){
+			if(!arr[i])return;
+			var count = 0;
+			for(var x=i-1;x<=i+1;x++){
+				for(var y=j-1;y<=j+1;y++){
+					if(x<0||y<0)continue;
+					if(arr[x]&&arr[x][y]&&arr[x][y]===9){
+						count++;
+					}
+				}
+			}
+			arr[i][j] = count;
+			if(count==0){
+				for(var x=i-1;x<=i+1;x++){
+					for(var y=j-1;y<=j+1;y++){
+						if(arr[x]&&arr[x][y]==-1){
+							countBoom(x,y);
+						}
+					}
+				}
+			}
+		}
+	</script>
+</body>
+</html>
