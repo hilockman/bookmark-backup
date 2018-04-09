@@ -1,2 +1,13 @@
 
 *.class
+*.pdb
+*.log
+*.tlog
+*.ilk
+*.obj
+*.exe
+*.suo
+*.vcxproj
+*.filters
+*.sdf
+*.opensdf

@@ -1,0 +1,221 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>CSS虫洞</title>
+
+<style>
+body {
+  background-color: #1e0059;
+  height: 100vh;/*相对于视窗的高度  vw*/
+  margin: 0;
+  overflow: hidden;
+  /*元素距离视图的距离，以像素计。属性定义 3D 元素距视图的距离 其子元素会获得透视效果，而不是元素本身。*/
+  -webkit-perspective: 5em;/*em是相对于父元素的属性而计算的*/
+          perspective: 5em;
+}
+/*:after 伪元素在元素之后添加内容。*/
+body::after {
+  background-color: inherit;
+  border-radius: 50%;/*圆角*/
+  box-shadow: 0 0 2em 2em #1e0059;
+  /*属性向框添加一个或多个阴影。box-shadow: h-shadow 水平阴影的位置。允许负值。
+   * v-shadow 垂直阴影的位置。允许负值。
+   * blur 模糊距离。
+   * spread  阴影的尺寸。
+   * color  阴影的颜色
+   * inset;将外部阴影 (outset) 改为内部阴影
+   */
+  content: "";
+  height: 1em;
+  left: 50%;
+  position: absolute;
+  top: 50%;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);/*往上（x轴）,左（y轴）移动自身长宽的 50%，以使其居于中心位置*/
+  width: 1em;
+}
+
+.cylinder {
+	/*属性定义动画的播放次数。infinite 规定动画应该无限次播放。*/
+  -webkit-animation-iteration-count: infinite;
+          animation-iteration-count: infinite;
+  -webkit-animation-name: tunnel;
+          animation-name: tunnel;
+          /*从开头到结尾以相同的速度来播放动画： ease 动画以低速开始，然后加快，在结束前变慢。*/
+  -webkit-animation-timing-function: linear;
+          animation-timing-function: linear;
+  left: 50%;
+  position: absolute;
+  top: 50%;
+  /*使被转换的子元素保留其 3D 转换：*/
+  -webkit-transform-style: preserve-3d;
+          transform-style: preserve-3d;
+          /*函数用于将元素沿Y轴方向移动*/
+  -webkit-transform: rotatex(90deg) rotatey(0) translatey(-25em);
+          transform: rotatex(90deg) rotatey(0) translatey(-25em);
+}
+.cylinder:nth-child(1) {
+	/*规定完成动画所花费的时间*/
+  -webkit-animation-duration: 8s;
+          animation-duration: 8s;
+}
+.cylinder:nth-child(2) {
+  -webkit-animation-duration: 4s;
+          animation-duration: 4s;
+}
+
+.side {
+  background-image: url(img/24ac8094-7dc0-40c4-9956-f69c5fb45896.jpg);
+  background-size: 32em 10em;
+  /*滤镜  可以控制显示颜色变化 设置对象的色相旋转*/
+  -webkit-filter: hue-rotate(-11.25deg);
+          filter: hue-rotate(-11.25deg);
+  height: 40em;
+  position: absolute;
+  /*设置旋转元素的基点位置*/
+  -webkit-transform-origin: 0;
+          transform-origin: 0;
+  width: 2em;
+}
+.side:nth-child(1) {
+  background-position: -2em;
+  -webkit-transform: rotatey(22.5deg) translate3d(-50%, 0, 5em);
+          transform: rotatey(22.5deg) translate3d(-50%, 0, 5em);
+}
+.side:nth-child(2) {
+  background-position: -4em;
+  -webkit-transform: rotatey(45deg) translate3d(-50%, 0, 5em);
+          transform: rotatey(45deg) translate3d(-50%, 0, 5em);
+}
+.side:nth-child(3) {
+  background-position: -6em;
+  -webkit-transform: rotatey(67.5deg) translate3d(-50%, 0, 5em);
+          transform: rotatey(67.5deg) translate3d(-50%, 0, 5em);
+}
+.side:nth-child(4) {
+  background-position: -8em;
+  -webkit-transform: rotatey(90deg) translate3d(-50%, 0, 5em);
+          transform: rotatey(90deg) translate3d(-50%, 0, 5em);
+}
+.side:nth-child(5) {
+  background-position: -10em;
+  -webkit-transform: rotatey(112.5deg) translate3d(-50%, 0, 5em);
+          transform: rotatey(112.5deg) translate3d(-50%, 0, 5em);
+}
+.side:nth-child(6) {
+  background-position: -12em;
+  -webkit-transform: rotatey(135deg) translate3d(-50%, 0, 5em);
+          transform: rotatey(135deg) translate3d(-50%, 0, 5em);
+}
+.side:nth-child(7) {
+  background-position: -14em;
+  -webkit-transform: rotatey(157.5deg) translate3d(-50%, 0, 5em);
+          transform: rotatey(157.5deg) translate3d(-50%, 0, 5em);
+}
+.side:nth-child(8) {
+  background-position: -16em;
+  -webkit-transform: rotatey(180deg) translate3d(-50%, 0, 5em);
+          transform: rotatey(180deg) translate3d(-50%, 0, 5em);
+}
+.side:nth-child(9) {
+  background-position: -18em;
+  -webkit-transform: rotatey(202.5deg) translate3d(-50%, 0, 5em);
+          transform: rotatey(202.5deg) translate3d(-50%, 0, 5em);
+}
+.side:nth-child(10) {
+  background-position: -20em;
+  -webkit-transform: rotatey(225deg) translate3d(-50%, 0, 5em);
+          transform: rotatey(225deg) translate3d(-50%, 0, 5em);
+}
+.side:nth-child(11) {
+  background-position: -22em;
+  -webkit-transform: rotatey(247.5deg) translate3d(-50%, 0, 5em);
+          transform: rotatey(247.5deg) translate3d(-50%, 0, 5em);
+}
+.side:nth-child(12) {
+  background-position: -24em;
+  -webkit-transform: rotatey(270deg) translate3d(-50%, 0, 5em);
+          transform: rotatey(270deg) translate3d(-50%, 0, 5em);
+}
+.side:nth-child(13) {
+  background-position: -26em;
+  -webkit-transform: rotatey(292.5deg) translate3d(-50%, 0, 5em);
+          transform: rotatey(292.5deg) translate3d(-50%, 0, 5em);
+}
+.side:nth-child(14) {
+  background-position: -28em;
+  -webkit-transform: rotatey(315deg) translate3d(-50%, 0, 5em);
+          transform: rotatey(315deg) translate3d(-50%, 0, 5em);
+}
+.side:nth-child(15) {
+  background-position: -30em;
+  -webkit-transform: rotatey(337.5deg) translate3d(-50%, 0, 5em);
+          transform: rotatey(337.5deg) translate3d(-50%, 0, 5em);
+}
+.side:nth-child(16) {
+  background-position: -32em;
+  -webkit-transform: rotatey(360deg) translate3d(-50%, 0, 5em);
+          transform: rotatey(360deg) translate3d(-50%, 0, 5em);
+}
+.cylinder:nth-child(2) .side {
+  opacity: 0.625;
+}
+
+@-webkit-keyframes tunnel {
+  100% {
+    -webkit-transform: rotatex(90deg) rotatey(360deg) translatey(-15em);
+            transform: rotatex(90deg) rotatey(360deg) translatey(-15em);
+  }
+}
+
+@keyframes tunnel {
+  100% {
+    -webkit-transform: rotatex(90deg) rotatey(360deg) translatey(-15em);
+            transform: rotatex(90deg) rotatey(360deg) translatey(-15em);
+  }
+}
+</style>
+</head>
+<body>
+
+<div class="cylinder">
+  <div class="side"></div>
+  <div class="side"></div>
+  <div class="side"></div>
+  <div class="side"></div>
+  <div class="side"></div>
+  <div class="side"></div>
+  <div class="side"></div>
+  <div class="side"></div>
+  <div class="side"></div>
+  <div class="side"></div>
+  <div class="side"></div>
+  <div class="side"></div>
+  <div class="side"></div>
+  <div class="side"></div>
+  <div class="side"></div>
+  <div class="side"></div>
+</div>
+
+<div class="cylinder">
+  <div class="side"></div>
+  <div class="side"></div>
+  <div class="side"></div>
+  <div class="side"></div>
+  <div class="side"></div>
+  <div class="side"></div>
+  <div class="side"></div>
+  <div class="side"></div>
+  <div class="side"></div>
+  <div class="side"></div>
+  <div class="side"></div>
+  <div class="side"></div>
+  <div class="side"></div>
+  <div class="side"></div>
+  <div class="side"></div>
+  <div class="side"></div>
+</div>
+</body>
+</html>
+
