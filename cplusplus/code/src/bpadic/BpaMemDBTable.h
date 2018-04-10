@@ -26,7 +26,7 @@
 
 
 
-static	tagMemDBTable	g_BpaTableDictArray[]=
+const	tagMemDBTable	g_BpaTableDictArray[]=
 {
 	{	BPA_DAT_CASE,		"BpaDat_Case"		,	"", "潮流控制语句"						, BPATableEnum_Dat	, sizeof(dicFieldBpaDat_Case)		/sizeof(tagMemDBField)	, sizeof(tagBpaDat_Case)		, MaxBpaDatCase			, BpaDatCase_Offset		,	{	1,	BPA_DAT_CASE_CASEID,			0,							0,								0,	},	dicFieldBpaDat_Case,		},
 	{	BPA_DAT_AREA,		"BpaDat_Area"		,	"", "区域表(AREA)"						, BPATableEnum_Dat	, sizeof(dicFieldBpaDat_Area)		/sizeof(tagMemDBField)	, sizeof(tagBpaDat_Area)		, MaxBpaDatArea			, BpaDatArea_Offset		,	{	1,	BPA_DAT_AREA_NAME,				0,							0,								0,	},	dicFieldBpaDat_Area,		},

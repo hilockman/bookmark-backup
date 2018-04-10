@@ -3,6 +3,6 @@ TARGET 		= 	bpadic
 
 CONFIG 	+= 	console c++11
 
-SOURCES += 	main.cpp
+SOURCES += 	*.cpp
 
 HEADERS += *.h
