@@ -2,20 +2,9 @@ package org.study.algorithm;
 
 import java.util.Comparator;
 
-public class SwapSort {
+public class MergeSort {
 
-	public static <T> void print(T[] array) {
-		System.out.print("[");
-		for (int i = 0; i < array.length; i++) {
-			if (i > 0) {
-				System.out.print(", ");
-			}
-			
-			System.out.print(array[i]);
-			
-		}
-		System.out.print("]");
-	}
+
 	
 	public static void sort(Integer[] datas) {
 		sort(datas, (v1, v2)->{ return v1.compareTo(v2); });

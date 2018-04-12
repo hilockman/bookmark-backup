@@ -1,0 +1,73 @@
+body{
+	background-color: #300089;
+	height: 100vh;/*相对于视窗的高度  vw*/
+	margin: 0;
+	overflow: hidden;
+	/*浏览器的兼容性，有些浏览器  自己适应   元素距离视图距离*/
+	-webkit-perspective: 5em;
+			perspective:5em;
+}
+/*:after 伪元素  在元素之后追加内容*/
+body::after{
+	background-color: inherit;
+	
+}
+.cylinder{
+	/*定义动画的播放次数  infinite  无限次*/
+	-webkit-animation-iteration-count: infinite;
+	animation-iteration-count: infinite;
+	/*动画起名字，待会重复使用*/
+	-webkit-animation-name: tun;
+	animation-name: tun;
+	/*从头到尾的动画执行的速度   ease 低速开始，加快  最后低速结束  linear相同的*/
+	-webkit-animation-timing-function: linear;
+	animation-timing-function: linear;
+	left: 50%;
+	position: absolute;
+	top: 50%;
+	/*保留3d转换的样式*/
+	-webkit-transform-style: preserve-3d;
+	transform-style: preserve-3d;
+	-webkit-transform: rotateX(90deg) rotateY(0) translateY(-25em);
+	transform: rotateX(90deg) rotateY(0) translateY(-25em);
+}
+.cylinder:nth-child(1){
+	-webkit-animation-duration: 8s;
+	animation-duration: 8s;
+}
+.cylinder:nth-child(2){
+	-webkit-animation-duration: 4s;
+	animation-duration: 4s;
+}
+
+.side{
+	background-image: url(../img/24ac8094-7dc0-40c4-9956-f69c5fb45896.jpg);
+	background-size: 32em 10em;
+	/*滤镜效果*/
+	-webkit-filter: hue-rotate(-12deg);
+	height: 40em;
+	/*旋转元素的基点位置*/
+	-webkit-transform-origin: 0;
+}
+/*jq做这个动画相当方便*/
+.side:nth-child(1){
+	-webkit-transform: rotateY(22.5deg) translate3d(-50%,0,5em);
+}
+.side:nth-child(2){
+	-webkit-transform: rotateY(45deg) translate3d(-50%,0,5em);
+}
+.side:nth-child(3){
+	-webkit-transform: rotateY(67.5deg) translate3d(-50%,0,5em);
+}.side:nth-child(4){
+	-webkit-transform: rotateY(90deg) translate3d(-50%,0,5em);
+}.side:nth-child(5){
+	-webkit-transform: rotateY(45deg) translate3d(-50%,0,5em);
+}.side:nth-child(6){
+	-webkit-transform: rotateY(45deg) translate3d(-50%,0,5em);
+}.side:nth-child(2){
+	-webkit-transform: rotateY(45deg) translate3d(-50%,0,5em);
+}.side:nth-child(2){
+	-webkit-transform: rotateY(45deg) translate3d(-50%,0,5em);
+}.side:nth-child(2){
+	-webkit-transform: rotateY(45deg) translate3d(-50%,0,5em);
+}
