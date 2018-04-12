@@ -73,6 +73,7 @@ void write(QJsonObject &json, CardInfo *info) {
 	json["name"] = info->name;
 	json["alias"] = info->alias;
 	json["type"] = (info->type == DatCard ? "dat" : "swi");
+	json["table"] = info->tableName;
 
 	QJsonArray bpaObject;
 	for (int i = 0; i < info->fields.size(); i++) {
