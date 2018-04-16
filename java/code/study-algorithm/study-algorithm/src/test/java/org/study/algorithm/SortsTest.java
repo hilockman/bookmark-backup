@@ -20,7 +20,7 @@ public class SortsTest {
 		for (int i = 0; i < count; i++) {
 		
 			Integer[] array = Utils.randomArray(size);		
-		    MergeSort.sort(array);
+		    MergeSort1.sort(array);
 
 		}
 		
