@@ -2,7 +2,7 @@ package org.study.algorithm;
 
 import java.util.Comparator;
 
-public class MergeSort {
+public class MergeSort1 {
 
 
 	
