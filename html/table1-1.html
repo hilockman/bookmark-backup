@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+  <head>
+     <meta></meta>
+       <!-- this is header-css -->
+		<link rel="stylesheet" type="text/css"	href="bootstrap/3.3.7/css/bootstrap.min.css" />
+
+
+        <link rel="stylesheet" href="http://cdn.bootcss.com/font-awesome/4.6.0/css/font-awesome.min.css">
+       
+
+        <script  type="text/javascript" src="scripts/jquery-3.2.1.js"></script>  
+		
+
+        <script type="text/javascript"  src="bootstrap/3.3.7/js/bootstrap.min.js"></script>  	 
+		
+
+	    <link href='table-fixed-header/table-fixed-header.css' rel='stylesheet'>
+        <script src='table-fixed-header/table-fixed-header.js'></script>
+		<script src='table-fixed-header/bottom-sticker.js'></script>
+	    <script src='table-fixed-header/duplicate_rows.js'></script>	
+	<style>
+	
+
+
+	</style>
+  </head>
+  <body>
+   <div>
+      <h1>eeeee</h1>
+   </div>
+   
+    <div class="pane pane-table">		
+		<table class='table table-bordered table-striped table-fixed-header'>
+		  <thead>
+			<th>foo</th><th>foooooooooooooooooooo</th><th>foo</th><th>foo</th>
+		  </thead>	
+			<tbody>
+				<tr>
+					<td class="filterable-cell">Ford</td>
+					<td class="filterable-cell">Escort</td>
+					<td class="filterable-cell">Blue</td>
+					<td class="filterable-cell">2000</td>
+				</tr>
+				<tr>
+					<td class="filterable-cell">Ford</td>
+					<td class="filterable-cell">Escort</td>
+					<td class="filterable-cell">Blue</td>
+					<td class="filterable-cell">2000</td>
+				</tr>
+						<tr>
+					<td class="filterable-cell">Ford</td>
+					<td class="filterable-cell">Escort</td>
+					<td class="filterable-cell">Blue</td>
+					<td class="filterable-cell">2000</td>
+				</tr>
+				 <tr>
+					<td class="filterable-cell">Ford</td>
+					<td class="filterable-cell">Escort</td>
+					<td class="filterable-cell">Blue</td>
+					<td class="filterable-cell">2000</td>
+				</tr>
+			</tbody>
+		</table>	
+	</div>
+  </body>
+  <script>
+
+ $(document).ready(function(){
+
+	   var loadTable = function (columns, records) {
+	   	    	   $('table').children().remove();
+	    	       	       	    		   
+			       var str = "";
+		    	   str += "<thead class='header'><tr>";
+		    	   for (var i=0; i < columns.length; i++) {
+		    		   str += "<th title='"+columns[i]+"'>"+columns[i]+'</th>'
+		    	   }
+		    	   str += "</tr></thead>";
+				       
+		    	   str += "<tbody>";
+				   
+		    	   for (var i=0; i < records.length; i++) {
+		    		   str += "<tr>";
+		    		   var rec = records[i];
+		    		   for (var j = 0; j < rec.length; j++) {
+		    			   str += '<td>'+rec[j]+'</td>'
+		    		   }
+		    		   str += "</tr>";
+		    	   }
+		    	   str += "</tbody>";
+			       $('table').append(str); 
+		};
+		
+		columns = [];
+		
+		var colsize = 10;
+		
+		for (var i = 0; i < 20; i++) {
+			columns.push('ColColColColColColColColColColCol'+i);
+		}
+		records = [];
+		
+		for (var i = 0; i < 100; i++) {
+		    var rec = [];
+			for (var j = 0; j < 10; j++) {
+			  rec.push('valvalvalvalval'+i+'_'+j);
+			}
+			
+			records.push(rec);
+		}
+		
+		loadTable(columns, records);
+        $('.table-fixed-header').fixedHeader();
+        $("#bottom-sticker").bottomSticker();		
+		
+	 });
+  </script>
+</html>

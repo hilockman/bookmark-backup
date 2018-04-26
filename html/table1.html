@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+  <head>
+     <meta></meta>
+       <!-- this is header-css -->
+		<link rel="stylesheet" type="text/css"	href="bootstrap/3.3.7/css/bootstrap.min.css" />
+
+
+        <link rel="stylesheet" href="http://cdn.bootcss.com/font-awesome/4.6.0/css/font-awesome.min.css">
+       
+
+        <script  type="text/javascript" src="scripts/jquery-3.2.1.js"></script>  
+		
+
+        <script type="text/javascript"  src="bootstrap/3.3.7/js/bootstrap.min.js"></script>  	 
+		
+        <script src="bootstrap-table/1.12.1/bootstrap-table.js"></script>
+        <link href="bootstrap-table/1.12.1/bootstrap-table.css" rel="stylesheet" />
+        <script src="bootstrap-table/1.12.1/locale/bootstrap-table-zh-CN.js"></script>		
+		
+	<style>
+	
+	  
+
+
+* {
+  box-sizing: border-box;
+}
+		
+table {
+  border-collapse: collapse;
+  background: white;
+  table-layout: fixed;
+  width: 100%;
+}
+th, td,tr {
+  padding: 8px 16px;
+  border: 1px solid #ddd;
+  width: 160px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.pane {
+  background: #eee;
+}
+.pane-hScroll {
+  overflow: auto;
+  //width: 400px;
+  background: green;
+}
+.pane-vScroll {
+  overflow-y: auto;
+  overflow-x: hidden;
+  height: 200px;
+  background: red;
+}
+
+	</style>
+  </head>
+  <body>
+   <div>
+      <h1>eeeee</h1>
+   </div>
+   
+    <div class="pane pane-table">
+		<div class="pane-hScroll">
+			<table>
+			  <thead>
+				<th>foo</th><th>foooooooooooooooooooo</th><th>foo</th><th>foo</th>
+			  </thead>
+			</table>	
+			
+			<div class="pane-vScroll">
+				<table>
+					<tbody>
+						<tr>
+							<td class="filterable-cell">Ford</td>
+							<td class="filterable-cell">Escort</td>
+							<td class="filterable-cell">Blue</td>
+							<td class="filterable-cell">2000</td>
+						</tr>
+						<tr>
+							<td class="filterable-cell">Ford</td>
+							<td class="filterable-cell">Escort</td>
+							<td class="filterable-cell">Blue</td>
+							<td class="filterable-cell">2000</td>
+						</tr>
+								<tr>
+							<td class="filterable-cell">Ford</td>
+							<td class="filterable-cell">Escort</td>
+							<td class="filterable-cell">Blue</td>
+							<td class="filterable-cell">2000</td>
+						</tr>
+						 <tr>
+							<td class="filterable-cell">Ford</td>
+							<td class="filterable-cell">Escort</td>
+							<td class="filterable-cell">Blue</td>
+							<td class="filterable-cell">2000</td>
+						</tr>
+					</tbody>
+				</table>	
+			</div>
+		</div>
+	</div>
+  </body>
+  <script>
+
+
+
+	   var loadTable = function (columns, records) {
+	   	    	   $('.pane-hScroll table').children().remove();
+	    	       	       	    		   
+			       var str = "";
+		    	   str += "<thead><tr>";
+		    	   for (var i=0; i < columns.length; i++) {
+		    		   str += "<th title='"+columns[i]+"'>"+columns[i]+'</th>'
+		    	   }
+		    	   str += "</tr></thead>";
+				       
+		    	   str += "<tbody>";
+				   
+				   $('.pane-hScroll table').append(str);
+				   
+				   $('.pane-vScroll table').children().remove();
+				   str = "";
+		    	   for (var i=0; i < records.length; i++) {
+		    		   str += "<tr>";
+		    		   var rec = records[i];
+		    		   for (var j = 0; j < rec.length; j++) {
+		    			   str += '<td>'+rec[j]+'</td>'
+		    		   }
+		    		   str += "</tr>";
+		    	   }
+		    	   str += "</tbody>";
+			       $('.pane-vScroll table').append(str); 
+		};
+		
+		columns = [];
+		
+		var colsize = 10;
+		
+		for (var i = 0; i < 20; i++) {
+			columns.push('ColColColColColColColColColColCol'+i);
+		}
+		records = [];
+		
+		for (var i = 0; i < 100; i++) {
+		    var rec = [];
+			for (var j = 0; j < 10; j++) {
+			  rec.push('valvalvalvalval'+i+'_'+j);
+			}
+			
+			records.push(rec);
+		}
+		
+		loadTable(columns, records);
+		
+		
+	   $(function() {
+	   $('.pane-hScroll').scroll(function() {
+		  $('.pane-vScroll').width($('.pane-hScroll').width() + $('.pane-hScroll').scrollLeft());
+		  $('td').width(160);
+		  console.log($('td').width());
+	   });
+	 });
+  </script>
+</html>
