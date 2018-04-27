@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+  <head>
+     <meta></meta>
+       <!-- this is header-css -->
+		<link rel="stylesheet" type="text/css"	href="bootstrap/3.3.7/css/bootstrap.min.css" />
+		<link rel="stylesheet" href="bootstrap-table/1.12.1/bootstrap-table.css">
+
+
+        <link rel="stylesheet" href="http://cdn.bootcss.com/font-awesome/4.6.0/css/font-awesome.min.css">
+       
+
+        <script  type="text/javascript" src="scripts/jquery-3.2.1.js"></script>  
+        
+        <script type="text/javascript"  src="bootstrap/3.3.7/js/bootstrap.min.js"></script>  	 
+		<script src="bootstrap-table/1.12.1/bootstrap-table.js"></script>
+
+	<style>
+
+	</style>
+  </head>
+  <body>
+   <div>
+   <h1>eeeee</h1>
+   </div>
+	  <div>
+		<table  id="table" >
+		  </table>	
+		</div>
+  </body>
+  <script>
+ 
+	 
+	var $table = $('#table');
+
+    $(function () {
+        buildTable($table, 50, 20);
+    });
+	
+	function detailFormatter(index, row) {
+        var html = [];
+        $.each(row, function (key, value) {
+            html.push('<p><b>' + key + ':</b> ' + value + '</p>');
+        });
+        return html.join('');
+    }
+
+
+    function buildTable($el, colSize, rowSize) {
+        		columns = [];
+		
+
+		for (var i = 0; i < colSize; i++) {
+			columns.push({field:'field'+i+'_ColColColColColColColColColColCol', title:'field'+i+'_ColColColColColColColColColColCol',sortable:false});
+		}
+		records = [];
+		
+		for (var i = 0; i < rowSize; i++) {
+		    var rec = {};
+			for (var j = 0; j < colSize; j++) {
+			  rec[columns[j].field]='valvalvalvalval_'+i+'_'+j;
+			}
+			
+			records.push(rec);
+		}
+        $el.bootstrapTable('destroy').bootstrapTable({
+		   striped: true,                      //是否显示行间隔色
+		    width: 30,
+			height : 600,
+			pagination: records.length < 100 ? false : true ,
+			pageSize: 100,
+			pageList: [10, 25, 50, 100], 
+			minimumCountColumns: 10,             //最少允许的列数
+			showColumns : true,                  //是否显示所有的列
+			dataToggle:table,                    //是否显示详细视图和列表视图的切换按钮
+			detailView: true,
+			detailFormatter : detailFormatter,
+            columns: columns,
+            data: records
+        });
+    }
+
+	
+  </script>
+</html>
