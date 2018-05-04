@@ -1,0 +1,150 @@
+<html>
+<head>
+    <meta charset="utf-8">
+    <!-- 引入 ECharts 文件 -->
+    <script src="echarts/4.0.4/echarts.min.js"></script>
+</head>
+<body>
+    <!-- 为 ECharts 准备一个具备大小（宽高）的 DOM -->
+    <div id="main" style="width: 600px;height:400px;"></div>
+	<script type="text/javascript">
+        // 基于准备好的dom，初始化echarts实例
+        var myChart = echarts.init(document.getElementById('main'));
+
+        // 指定图表的配置项和数据
+       option = {
+    grid: {
+        left: '3%',
+        right: '15%'
+    },
+    toolbox: {
+        show: true,
+        feature: {
+            saveAsImage: {
+                pixelRatio: 5
+            }
+        }
+    },
+    title: [{
+            text: 'Concentration\nof surplus',
+            textStyle: {
+                fontSize: 12,
+                color: '#660099',
+                fontWeight: 'light'
+            },
+            left: 620,
+            top: 215
+        },
+        {
+            text: 'Concentration\nof deficit',
+            textStyle: {
+                fontSize: 5,
+                color: '#ffde33',
+                fontWeight: 'light'
+            },
+            left: 620,
+            top: 350
+        },
+        {
+            text: '经常账户余额的聚集程度',
+            left: 'center'
+        },
+    ],
+    tooltip: {
+        trigger: 'axis',
+        formatter: '{b}<br/>{a0}  : {c0}<br/>{a1}  :{c1}'
+    },
+    // legend: {
+    //     left: 'center',
+    //     data: ['Persistence of deficit', 'Persistence of surplus']
+    // },
+    xAxis: {
+        type: 'category',
+        name: 'Year',
+        axisTick: {
+            alignWithLabel: true,
+            interval: 0
+        },
+        // nameLocation:'bottom',
+        splitLine: {
+            show: false
+        },
+        data: [1990, 1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016]
+    },
+    // grid: {
+    //     left: '3%',
+    //     right: '4%',
+    //     bottom: '3%',
+    //     containLabel: true
+    // },
+    yAxis: {
+        type: 'value',
+        min: 0,
+        max: 16,
+        interval: 4,
+        // name: 'y'
+    },
+    visualMap: {
+        top: 10,
+        right: 10,
+        show: false,
+        pieces: [{
+            gt: 0,
+            lte: 4,
+            color: '#096'
+        }, {
+            gt: 4,
+            lte: 8,
+            color: '#ffde33'
+        }, {
+            gt: 8,
+            lte: 12,
+            color: '#660099'
+        }, {
+            gt: 12,
+            lte: 16,
+            color: '#cc0033'
+        }]
+    },
+    series: [{
+            name: 'Concentration of deficit',
+            type: 'line',
+            smooth: true,
+            lineStyle: {
+                normal: {
+                    type: 'dashed'
+                }
+            },
+            markLine: {
+                silent: true,
+                data: [{
+                    yAxis: 4
+                }, {
+                    yAxis: 8
+                }, {
+                    yAxis: 12
+                }, {
+                    yAxis: 16
+                }]
+            },
+            data: [7.59, 14.41, 12.04, 8.09, 5.21, 5.67, 5.49, 4.42, 3.54, 3.07, 2.46, 2.07, 1.85, 1.9, 2.07, 2.18, 2.47, 3.48, 4.48, 5.21, 5.67, 5.66, 5.73, 6.6, 5.83, 5.56, 4.38]
+        },
+        {
+            name: 'Concentration of surplus',
+            type: 'line',
+            smooth: true,
+            data: [6.49, 3.78, 2.61, 2.49, 3.31, 4.51, 8.64, 6.86, 6.68, 8.55, 8.97, 11.31, 11.47, 12.08, 11.33, 12.88, 12.18, 9.46, 8.92, 9.51, 10.73, 13.69, 12.53, 13.2, 11.36, 9.1, 9.44]
+        },
+        // {
+        //     name: '1/2的指数',
+        //     type: 'line',
+        //     data: [1/2, 1/4, 1/8, 1/16, 1/32, 1/64, 1/128, 1/256, 1/512]
+        // }
+    ]
+};
+
+        // 使用刚指定的配置项和数据显示图表。
+        myChart.setOption(option);
+    </script>
+</body>
+</html>
