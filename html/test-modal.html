@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+  <head>
+     <meta></meta>
+       <!-- this is header-css -->
+		<link rel="stylesheet" type="text/css"	href="bootstrap/3.3.7/css/bootstrap.min.css" />
+		<link rel="stylesheet" href="bootstrap-table/1.12.1/bootstrap-table.css">
+
+
+        <link rel="stylesheet" href="http://cdn.bootcss.com/font-awesome/4.6.0/css/font-awesome.min.css">
+       
+
+        <script  type="text/javascript" src="scripts/jquery-3.2.1.js"></script>  
+        
+        <script type="text/javascript"  src="bootstrap/3.3.7/js/bootstrap.min.js"></script>  	 
+		<script src="bootstrap-table/1.12.1/bootstrap-table.js"></script>
+
+	<style>
+
+	</style>
+  </head>
+  <body>
+<div class="container">
+  <h2>Basic Modal Example</h2>
+  <!-- Trigger the modal with a button -->
+  <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Open Modal</button>
+
+  <!-- Modal -->
+  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Modal Header</h4>
+        </div>
+        <div class="modal-body">
+          <p>Some text in the modal.</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+  
+</div>
+
+</body>
+  <script>
+ 
+	 
+	var $table = $('#table');
+
+    $(function () {
+        buildTable($table, 50, 20);
+    });
+	
+	function detailFormatter(index, row) {
+        var html = [];
+        $.each(row, function (key, value) {
+            html.push('<p><b>' + key + ':</b> ' + value + '</p>');
+        });
+        return html.join('');
+    }
+
+
+    function buildTable($el, colSize, rowSize) {
+        		columns = [];
+		
+
+		for (var i = 0; i < colSize; i++) {
+			columns.push({field:'field'+i+'_ColColColColColColColColColColCol', title:'field'+i+'_ColColColColColColColColColColCol',sortable:false});
+		}
+		records = [];
+		
+		for (var i = 0; i < rowSize; i++) {
+		    var rec = {};
+			for (var j = 0; j < colSize; j++) {
+			  rec[columns[j].field]='valvalvalvalval_'+i+'_'+j;
+			}
+			
+			records.push(rec);
+		}
+        $el.bootstrapTable('destroy').bootstrapTable({
+		   striped: true,                      //是否显示行间隔色
+		    width: 30,
+			height : 600,
+			pagination: records.length < 100 ? false : true ,
+			pageSize: 100,
+			pageList: [10, 25, 50, 100], 
+			minimumCountColumns: 10,             //最少允许的列数
+			showColumns : true,                  //是否显示所有的列
+			dataToggle:table,                    //是否显示详细视图和列表视图的切换按钮
+			detailView: true,
+			detailFormatter : detailFormatter,
+            columns: columns,
+            data: records
+        });
+    }
+
+	
+  </script>
+</html>
