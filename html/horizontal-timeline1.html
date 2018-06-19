@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<style>
+.Img1{
+ margin-top:30px;
+ position:relative;
+}
+.Img1:before{
+      content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 21px;
+    width: 1px;
+    background: red;
+    margin: 0 auto;
+    top: -26px;
+}
+.Img1 img{width:100%;border-radius:50%;width:100px;
+  height:100px;}
+  
+  .Text2{
+  width:200px;
+}
+
+.Img2{
+ margin-bottom:30px;
+ position:relative;
+}
+.Img2:before{
+      content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 21px;
+    width: 1px;
+    background: red;
+    margin: 0 auto;
+    bottom: -26px;
+}
+.Img2 img{width:100%;border-radius:50%;width:100px;
+  height:100px;}
+.container {
+    float: left;
+    margin: 0 10px;
+    text-align:center;
+}
+
+@media screen and (max-width: 767px) {
+  .container {
+    float: none;
+    clear: both;
+    margin:20px 0;
+}
+.container:after { content: "\00A0"; display: block; clear: both; visibility: hidden; line-height: 0; height: 0;}
+.container{ display: inline-block;}
+html[xmlns] .container { display: block;}
+* html .container{ height: 1%;}
+.container {display: block}
+.Text1 {
+    float: right;
+    margin:30px 0;
+}
+.Img1 {
+    float: left;
+    margin-top:0;
+    
+}
+
+
+.Text2 {
+    float: left;
+    margin:30px 0;
+}
+.Img2 {
+    float: right;
+    margin-bottom:30px;
+}
+.wrapper{width:60%;margin:0 auto;}
+.Img2:before,.Img1:before{display:none;}
+}
+	</style>
+</head>
+<body>
+	<div class="wrapper">
+	<div class="container">
+	<div class="Text1">
+	Idea formed
+	</div>
+	<div class="Img1">
+	<img src="https://www.nasa.gov/sites/default/files/styles/image_card_4x3_ratio/public/thumbnails/image/leisa_christmas_false_color.png">
+	</div>
+	</div>
+	<div class="container">
+	<div class="Img2">
+	<img src="https://www.nasa.gov/sites/default/files/styles/image_card_4x3_ratio/public/thumbnails/image/leisa_christmas_false_color.png">
+	</div>
+	<div class="Text2">
+	Private funding for prototype raise
+	</div>
+	</div>
+	</div>
+</body>
+</html>
