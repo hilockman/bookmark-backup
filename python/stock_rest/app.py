@@ -31,6 +31,19 @@ def index():
 def get_hist_data(task_id):
     return ts.get_hist_data(task_id).to_json()
 
+@app.route('/stock/basics',methods=['GET'])
+def get_stock_basics():
+    basics = ts.get_stock_basics()
+    basics.to_excel('d:/stock/stock_basics.xlsx')
+    return basics.to_json()
+	
+@app.route('/stock/realtime_quotes/<string:stock_id>',methods=['GET'])
+def get_realtime_quotes(stock_id):
+    return ts.get_realtime_quotes(stock_id).to_json()
+
+	
 if __name__ == '__main__':
     app.run(debug=True)
+	
+	
 	
