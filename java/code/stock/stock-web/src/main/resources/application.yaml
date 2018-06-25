@@ -1,0 +1,13 @@
+server:
+    name: stock-web
+    port: 5001
+
+logging:
+    level:
+      interfaceLogger: OFF
+      ClusterConnectionManager: OFF
+      PubSubConnectionPool: OFF
+      SlaveConnectionPool: OFF
+      org.redisson: OFF 
+    file: log/ei-ads-client.log 
+

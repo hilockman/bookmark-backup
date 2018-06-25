@@ -1,0 +1,19 @@
+获取实时数据：
+pandas, lxml, bs4, tushare
+
+pip install pandas tushare -U
+
+
+发布rest接口
+flask
+
+pip install flask -U
+
+数据库连接
+sqlalchemy
+
+mysql数据库引擎支持
+pip install mysqlclient
+
+execle存储
+openpyxl
