@@ -1,4 +1,4 @@
-# maven notes
+# python notes
 
 **参考**
 - [Maven by Example][Maven by Example]
@@ -21,6 +21,10 @@ pip install mysqlclient
 ### 启动一个简单web工程
 ```
 python -m SimpleHTTPServer 8000
+```
+windows
+```
+python -m http.server 8000
 ```
 
 
