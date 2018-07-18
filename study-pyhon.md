@@ -10,14 +10,17 @@
 
 ## FAQ
 + 安装注意事项
++ 安装mysql访问客户端
 + 常用命令
   - [启动一个简单web工程](#启动一个简单web工程)
 
 
 ### 安装注意事项
 install 3.6.5 on win10, unchecking 'Install launcher for all users'
-安装mysql访问客户端
+
+### 安装mysql访问客户端
 pip install mysqlclient
+
 ### 启动一个简单web工程
 ```
 python -m SimpleHTTPServer 8000
