@@ -1,11 +1,11 @@
 # python notes
 
 **参考**
-- [Maven by Example][Maven by Example]
-- [项目管理利器——maven][项目管理利器——maven]
+- [redis-py][redis-py]
+- [Python 3.7.0 documentation][Python 3.7.0 documentation]
 
-[Maven by Example]:http://books.sonatype.com/mvnex-book/reference/index.html
-[项目管理利器——maven]:http://www.imooc.com/learn/443
+[redis-py]:https://github.com/andymccurdy/redis-py
+[Python 3.7.0 documentation]:https://docs.python.org/3/
 
 
 ## FAQ
@@ -27,4 +27,16 @@ windows
 python -m http.server 8000
 ```
 
+### csv文件
+```
+import csv
+import codecs
+# 先给文件写一个Windows系统用来识别编码的头(UTF-8 BOM)
+with open('./outputs/tetcsv.csv', 'wb') as outfile:
+    outfile.write(codecs.BOM_UTF8)
 
+with open('./outputs/tetcsv.csv', 'a', newline='', encoding='UTF-8') as outfile:
+    writer = csv.writer(outfile, dialect='excel')	
+    # 写入一行
+    writer.writerow(["名称", "分数"])	
+```
