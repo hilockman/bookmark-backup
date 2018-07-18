@@ -44,3 +44,4 @@ with open('./outputs/tetcsv.csv', 'a', newline='', encoding='UTF-8') as outfile:
     # 写入一行
     writer.writerow(["名称", "分数"])	
 ```
+Writerow must be inside with , because Outside the with block, the file is closed.
