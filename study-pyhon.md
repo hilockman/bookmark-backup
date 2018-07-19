@@ -3,10 +3,12 @@
 **参考**
 - [redis-py][redis-py]
 - [Python 3.7.0 documentation][Python 3.7.0 documentation]
+- [flask][flask]
+
 
 [redis-py]:https://github.com/andymccurdy/redis-py
 [Python 3.7.0 documentation]:https://docs.python.org/3/
-
+[flask]:https://www.palletsprojects.com/p/flask/
 
 ## FAQ
 - [安装注意事项](#安装注意事项)
@@ -45,3 +47,21 @@ with open('./outputs/tetcsv.csv', 'a', newline='', encoding='UTF-8') as outfile:
     writer.writerow(["名称", "分数"])	
 ```
 Writerow must be inside with , because Outside the with block, the file is closed.
+
+
+### create restful service
+dependency : flask
+
+```
+#!flask/bin/python
+from flask import Flask
+
+app = Flask(__name__)
+
+@app.route('/')
+def index():
+    return "Hello, World!"
+
+if __name__ == '__main__':
+    app.run(debug=True)
+```
