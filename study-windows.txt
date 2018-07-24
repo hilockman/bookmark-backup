@@ -1,2 +1,0 @@
-1创建目录链接
-mklink /J olddir newdir
