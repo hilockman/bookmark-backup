@@ -38,6 +38,7 @@ python -m http.server 8000
 import csv
 import codecs
 # 先给文件写一个Windows系统用来识别编码的头(UTF-8 BOM)
+```
 with open('./outputs/tetcsv.csv', 'wb') as outfile:
     outfile.write(codecs.BOM_UTF8)
 
@@ -47,6 +48,14 @@ with open('./outputs/tetcsv.csv', 'a', newline='', encoding='UTF-8') as outfile:
     writer.writerow(["名称", "分数"])	
 ```
 Writerow must be inside with , because Outside the with block, the file is closed.
+
+写入包含utf-8 bom头的文件可简化为：
+```
+with open('./outputs/tetcsv.csv', 'a', newline='', encoding='utf-8-sig') as outfile:
+    writer = csv.writer(outfile, dialect='excel')	
+    # 写入一行
+    writer.writerow(["名称", "分数"])	
+```
 
 读取包含bom的csv文件，指定utf-8-sig解码
 ```
