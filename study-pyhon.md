@@ -48,6 +48,10 @@ with open('./outputs/tetcsv.csv', 'a', newline='', encoding='UTF-8') as outfile:
 ```
 Writerow must be inside with , because Outside the with block, the file is closed.
 
+读取包含bom的csv文件，指定utf-8-sig解码
+```
+open(fpath, 'r', newline='', encoding='utf-8-sig')
+```
 
 ### create restful service
 dependency : flask
