@@ -27,3 +27,5 @@ select * from user where age > 18 and name='zhangfei' 部分失效
 5 navicat连接mysql8失败
 ALTER USER 'root'@'localhost' IDENTIFIED BY 'root' PASSWORDEXPIRE NEVER;
 ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'root';
+
+### 6 [centos安装mysql]<https://www.digitalocean.com/community/tutorials/how-to-install-mysql-on-centos-7>
