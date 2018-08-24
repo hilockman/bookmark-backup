@@ -308,3 +308,22 @@ init 5
 修改 /etc/sudoers 文件，找到下面一行，把前面的注释（#）去掉
 ## Allows people in group wheel to run all commands
 wheel    ALL=(ALL)    ALL
+
+
+### 25 后台运行java程序
+
+执行命令
+```
+nohup java -jar aaa.jar &
+```
+然后回车
+
+也可以指定日志文件文件名随意（如：aaa.log）
+```
+nohup java -jar aaa.jar > aaa.log 2>&1 &
+```
+查看进程可以使用 
+
+``` ps -ef|grep 'java -jar'
+
+运行后，在当前路径下会生成nohup.out文件，会记录服务器的日志。
