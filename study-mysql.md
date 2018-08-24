@@ -55,3 +55,8 @@ Finally, reload the permissions, and you should be able to have remote access:
 ```
 FLUSH PRIVILEGES;
 ```
+
+Additionally, you will need to modify password:
+```
+ALTER USER 'root'@'%' IDENTIFIED WITH mysql_native_password BY 'some_pass';
+```
