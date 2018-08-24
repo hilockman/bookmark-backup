@@ -1,29 +1,33 @@
-1修改远程访问权限
+### 1修改远程访问权限
 登陆：
+```
 mysql -h localhost -u root -p
 GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' IDENTIFIED BY 'root' WITH GRANT OPTION;
+```
+### 2，innodb只有一个聚集索引
 
-2，innodb只有一个聚集索引
-
-3，不适合建索引的情况
+### 3，不适合建索引的情况
 where条件中用不到的字段
 频繁更新的字段
 数据值发布比较均匀的不适合建索引
 表的数据可以确定行数的，而且
 
-4什么情况下索引失效：
+#### 4 什么情况下索引失效：
 order by
 
 age是索引的情况下
+```
 select * from user order by age 索引生效
-
+```
 index(name, age) 复合索引
+```
 select * from user order by age 索引失效
 select * from user where age=18 and name='zhangfei'索引失效，要按顺序提供查询条件
-
+```
 index(age, name) 复合索引
+```
 select * from user where age > 18 and name='zhangfei' 部分失效
-
+```
 ### 5 navicat连接mysql8失败
 ```
 ALTER USER 'root'@'localhost' IDENTIFIED BY 'root' PASSWORDEXPIRE NEVER;
