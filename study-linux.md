@@ -285,3 +285,26 @@ ssh-copy-id 目标机器
 scp test.tar host:/usr/local
 scp file hostname:`pwd`
  
+### 23 安装图形系统
+yum groupinstall “X Window System” 
+yum groupinstall “GNOME Desktop” 
+(卸载yum groupremove +组包名即可）
+
+
+不行的话系统升级下：
+yum upgrade
+init 5
+
+最靠谱步骤
+1. Install CentOS-7 - Minimal (First entry point in list)
+2. yum groupinstall "X Window System"
+3. yum install gnome-classic-session gnome-terminal nautilus-open-terminal control-center liberation-mono-fonts
+4. unlink /etc/systemd/system/default.target
+5. ln -sf /lib/systemd/system/graphical.target /etc/systemd/system/default.target
+6. reboot
+
+
+### 24 增加root权限
+修改 /etc/sudoers 文件，找到下面一行，把前面的注释（#）去掉
+## Allows people in group wheel to run all commands
+wheel    ALL=(ALL)    ALL
