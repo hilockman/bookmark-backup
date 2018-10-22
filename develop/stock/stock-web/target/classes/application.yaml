@@ -1,6 +1,6 @@
 server:
     name: stock-web
-    port: 5001
+    port: 5000
 
 logging:
     level:

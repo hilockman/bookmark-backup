@@ -5,6 +5,7 @@
  <artifactId>stock-web</artifactId>
   <name>stock-web</name>
   <url>http://maven.apache.org</url>
+   <packaging>war</packaging>
   <parent>
     <groupId>com.whllx</groupId>
     <artifactId>stock</artifactId>
@@ -12,6 +13,8 @@
   </parent>
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+     <start-class>org.stock.web.Application</start-class>
   </properties>
   <dependencies>
     <dependency>
@@ -49,5 +52,13 @@
 			<groupId>com.google.code.gson</groupId>
 			<artifactId>gson</artifactId>
 		</dependency>
+		
+	<!-- marked the embedded servlet container as provided -->
+	<dependency>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-tomcat</artifactId>
+		<scope>provided</scope>
+	</dependency>		
   </dependencies>
+ 
 </project>

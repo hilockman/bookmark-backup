@@ -18,14 +18,14 @@ app = Flask(__name__)
 def index():
     return "Hello, World!"
 	
-@app.route('/stock/histData/<string:task_id>',methods=['GET'])
-def get_hist_data(task_id):
-    return ts.get_hist_data(task_id).to_json()
+@app.route('/stock/histData/<string:stock_id>',methods=['GET'])
+def get_hist_data(stock_id):
+    return ts.get_hist_data(stock_id).to_json()
 
 @app.route('/stock/basics',methods=['GET'])
 def get_stock_basics():
     basics = ts.get_stock_basics()
-    basics.to_excel('d:/stock/stock_basics.xlsx')
+    #basics.to_excel('d:/stock/stock_basics.xlsx')
     return basics.to_json()
 	
 @app.route('/stock/realtime_quotes/<string:stock_id>',methods=['GET'])
@@ -39,7 +39,7 @@ def shutdown():
 
 	
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host='0.0.0.0', port=5001, debug=True)
 	
 	
 	
