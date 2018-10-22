@@ -1,9 +1,11 @@
 1 rhel7安装
+```
 boot 分区：引导分区 ，系统启动，grub（引导器）， 内核
 swap 分区：内存扩展分区给多大， 一般最多8~16G
 / 根：所有文件的根
 sda 第一块磁盘
 RHEL7默认使用xfs文件系统，RHEL6默认使用ext4
+```
 
 2 vmware 快照
 
@@ -285,3 +287,45 @@ ssh-copy-id 目标机器
 scp test.tar host:/usr/local
 scp file hostname:`pwd`
  
+### 23 安装图形系统
+yum groupinstall “X Window System” 
+yum groupinstall “GNOME Desktop” 
+(卸载yum groupremove +组包名即可）
+
+
+不行的话系统升级下：
+yum upgrade
+init 5
+
+最靠谱步骤
+1. Install CentOS-7 - Minimal (First entry point in list)
+2. yum groupinstall "X Window System"
+3. yum install gnome-classic-session gnome-terminal nautilus-open-terminal control-center liberation-mono-fonts
+4. unlink /etc/systemd/system/default.target
+5. ln -sf /lib/systemd/system/graphical.target /etc/systemd/system/default.target
+6. reboot
+
+
+### 24 增加root权限
+修改 /etc/sudoers 文件，找到下面一行，把前面的注释（#）去掉
+## Allows people in group wheel to run all commands
+wheel    ALL=(ALL)    ALL
+
+
+### 25 后台运行java程序
+
+执行命令
+```
+nohup java -jar aaa.jar &
+```
+然后回车
+
+也可以指定日志文件文件名随意（如：aaa.log）
+```
+nohup java -jar aaa.jar > aaa.log 2>&1 &
+```
+查看进程可以使用 
+
+``` ps -ef|grep 'java -jar'
+
+运行后，在当前路径下会生成nohup.out文件，会记录服务器的日志。
