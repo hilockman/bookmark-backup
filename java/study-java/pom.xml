@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>study-java</groupId>
+  <artifactId>study-java</artifactId>
+  <version>1.0.0</version>
+  <packaging>pom</packaging>
+  <name>study-java</name>
+  <description>study-java</description>
+  <modules>
+  	<module>test-jvm</module>
+    <module>study-reddisson</module>
+    <module>maven-update-test</module>
+    <module>test-spring-regist-bean</module>
+  </modules>
+  	<distributionManagement>    
+	    <repository>    
+	        <id>nexus-releases</id>    
+	        <name>Maven Release Repository</name>    
+	        <url>http://192.168.1.27:8081/repository/maven-releases/</url>    
+	    </repository>    
+	        <snapshotRepository>    
+	        <id>nexus-releases</id>    
+	        <name>Maven Snapshot Repository</name>    
+	        <url>http://192.168.1.27:8081/repository/maven-snapshots/</url>    
+	    </snapshotRepository>    
+	</distributionManagement> 
+</project>

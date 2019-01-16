@@ -1,0 +1,10 @@
+server:
+  session-timeout : 3600
+  name: test-spring-regist-bean
+  port: 8080
+
+  
+#buffer配置  
+buffer:
+   id:  0
+   name: common 
